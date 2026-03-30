@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yenna — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  :root{--bg:#F0EFEB;--card:#E8E6E1;--white:#FAFAF8;--charcoal:#1A1A1A;--mid:#777;--light:#B8B8B8;--pale:#D6D4CF;--blue:#A7C7DC;--blue-dim:#8AB4CE;--blue-soft:rgba(167,199,220,0.12);--blue-glow:rgba(167,199,220,0.25);--display:'Playfair Display',Georgia,serif;--body:'Outfit',system-ui,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden}body{font-family:var(--body);background:var(--bg);color:var(--charcoal)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:20px 48px;background:rgba(240,239,235,0.8);backdrop-filter:blur(24px)}
+  .nav-logo{font-family:var(--display);font-size:24px;font-weight:700;color:var(--charcoal);text-decoration:none;letter-spacing:2px}
+  .nav-links{display:flex;gap:28px;list-style:none}.nav-links a{font-family:var(--body);font-size:12px;font-weight:300;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .3s}.nav-links a:hover{color:var(--blue-dim)}
+
+  /* HERO - SPLIT REVEAL */
+  .hero-split-wrap{height:200vh;position:relative}.hero-split-pin{height:100vh;width:100%;position:relative;overflow:hidden}
+  .curtain-left,.curtain-right{position:absolute;top:0;bottom:0;width:50%;background:var(--charcoal);z-index:10}.curtain-left{left:0}.curtain-right{right:0}
+  .curtain-text{position:absolute;top:50%;left:50%;z-index:20;transform:translate(-50%,-50%);text-align:center;white-space:nowrap}
+  .curtain-text h1{font-family:var(--display);font-size:clamp(48px,10vw,140px);font-weight:900;color:var(--bg);line-height:.9}
+  .curtain-text h1 em{font-weight:400;font-style:italic;color:var(--blue)}.curtain-text .sub{font-family:var(--body);font-size:13px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--blue);margin-top:20px}
+  .hero-revealed{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:28px}
+  .hero-revealed h2{font-family:var(--display);font-size:clamp(36px,6vw,72px);font-weight:400;line-height:1.1}.hero-revealed h2 em{font-style:italic;color:var(--blue-dim)}
+  .hero-revealed p{font-family:var(--body);font-size:16px;font-weight:200;color:var(--mid);max-width:440px;line-height:1.7}
+  .hero-revealed .cta{font-family:var(--body);font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;padding:16px 40px;border:1px solid var(--pale);transition:all .4s}
+  .hero-revealed .cta:hover{border-color:var(--blue);background:var(--blue-soft);color:var(--blue-dim)}
+
+  /* GALLERY - FLIP CARDS */
+  .gallery-section{padding:120px 48px}
+  .gallery-title{font-family:var(--display);font-size:48px;font-weight:400;margin-bottom:16px}.gallery-title em{font-style:italic;color:var(--blue-dim)}
+  .gallery-sub{font-family:var(--body);font-size:14px;color:var(--mid);margin-bottom:64px}
+  .flip-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
+  .flip-card{perspective:1200px;cursor:pointer}
+  .flip-inner{position:relative;width:100%;aspect-ratio:3/4;transform-style:preserve-3d;will-change:transform}
+  .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden}
+  .flip-front{overflow:hidden}.flip-front img{width:100%;height:100%;object-fit:cover;display:block}
+  .flip-back{background:var(--charcoal);color:var(--bg);transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:24px;text-align:center}
+  .flip-back h4{font-family:var(--display);font-size:20px;font-weight:400}.flip-back span{font-family:var(--body);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue)}
+  .flip-back .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);margin-top:6px}
+  .flip-back p{font-family:var(--body);font-size:11px;font-weight:200;color:rgba(240,239,235,0.5);line-height:1.5;margin-top:6px}
+
+  /* TIKTOK */
+  .tiktok-section{padding:120px 48px;text-align:center;border-top:1px solid var(--pale);border-bottom:1px solid var(--pale)}
+  .tiktok-title{font-family:var(--display);font-size:48px;font-weight:400;margin-bottom:8px}.tiktok-title em{font-style:italic;color:var(--blue-dim)}
+  .tiktok-sub{font-family:var(--body);font-size:14px;color:var(--mid);margin-bottom:56px}
+  .tiktok-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1200px;margin:0 auto}
+  .tiktok-card{border-radius:12px;overflow:hidden;background:var(--charcoal);position:relative}
+  .tiktok-card video{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:9/16;border-radius:12px}
+  .tiktok-overlay{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,0.7));border-radius:0 0 12px 12px;opacity:0;transition:opacity .3s}
+  .tiktok-card:hover .tiktok-overlay{opacity:1}
+  .tiktok-overlay span{font-family:var(--body);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--blue)}
+  .tiktok-follow{display:inline-flex;align-items:center;gap:10px;margin-top:48px;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;padding:14px 36px;border:1px solid var(--pale);transition:all .4s}
+  .tiktok-follow:hover{border-color:var(--blue);background:var(--blue-soft);color:var(--blue-dim)}
+
+  /* ABOUT - FROM CONCEPT 2 */
+  .about-band{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-top:1px solid var(--pale);border-bottom:1px solid var(--pale)}
+  .about-img-side{background:var(--card);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px}
+  .about-img-side img{width:100%;max-width:360px;aspect-ratio:3/4;object-fit:cover;display:block;position:relative;z-index:2;box-shadow:0 16px 60px rgba(0,0,0,0.1)}
+  .about-img-frame{position:absolute;top:50%;left:50%;transform:translate(calc(-50% + 16px),calc(-50% + 16px));width:340px;height:440px;border:1px solid var(--blue-glow);z-index:1}
+  .about-txt-side{display:flex;flex-direction:column;justify-content:center;padding:80px}
+  .about-txt-side .tag{font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+  .about-txt-side .tag::before{content:'';width:32px;height:1px;background:var(--blue)}
+  .about-txt-side h2{font-family:var(--display);font-size:48px;font-weight:400;line-height:1.12;margin-bottom:28px}.about-txt-side h2 em{font-style:italic;color:var(--blue-dim)}
+  .about-txt-side p{font-family:var(--body);font-size:15px;font-weight:300;line-height:1.85;color:var(--mid);max-width:420px;margin-bottom:16px}
+  .about-txt-side .read-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-family:var(--body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;transition:color .3s}.about-txt-side .read-link:hover{color:var(--blue-dim)}
+
+  /* MARQUEE */
+  .marquee{padding:52px 0;overflow:hidden;border-top:1px solid var(--pale);border-bottom:1px solid var(--pale)}
+  .marquee-track{display:flex;gap:60px;width:max-content;will-change:transform}
+  .marquee-item{font-family:var(--display);font-size:52px;font-weight:400;white-space:nowrap;color:var(--pale);display:flex;align-items:center;gap:60px}.marquee-item em{font-style:italic;color:var(--blue-glow)}
+  .m-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0}
+
+  /* CTA - FROM CONCEPT 2 */
+  .cta-section{padding:200px 48px;text-align:center;position:relative;overflow:hidden}
+  .cta-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:55vw;height:55vw;max-width:650px;max-height:650px;border-radius:50%;border:1px solid var(--blue-glow);will-change:transform}
+  .cta-inner{position:relative;z-index:2}.cta-inner h2{font-family:var(--display);font-size:clamp(44px,7vw,90px);font-weight:900;line-height:1.05;margin-bottom:24px}.cta-inner h2 em{font-weight:400;font-style:italic;color:var(--blue-dim)}
+  .cta-inner p{font-family:var(--body);font-size:15px;font-weight:300;color:var(--mid);max-width:460px;margin:0 auto 40px;line-height:1.7}
+  .cta-btn{display:inline-block;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--blue-dim);text-decoration:none;padding:18px 48px;transition:all .4s;box-shadow:0 4px 24px var(--blue-glow)}.cta-btn:hover{background:var(--charcoal);box-shadow:0 4px 24px rgba(0,0,0,0.15)}
+
+  /* FOOTER */
+  footer{padding:56px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--pale)}
+  .footer-logo{font-family:var(--display);font-size:18px;font-weight:700;letter-spacing:2px}
+  .footer-socials{display:flex;gap:24px}.footer-socials a{font-family:var(--body);font-size:12px;color:var(--mid);text-decoration:none;transition:color .3s}.footer-socials a:hover{color:var(--blue-dim)}
+  .footer-copy{font-family:var(--body);font-size:11px;color:var(--light)}
+
+  @media(max-width:768px){
+    nav{padding:16px 20px}.nav-links{display:none}
+    .flip-grid{grid-template-columns:1fr 1fr}.gallery-section{padding:80px 24px}
+    .tiktok-section{padding:80px 24px}.tiktok-grid{grid-template-columns:1fr 1fr}
+    .about-band{grid-template-columns:1fr}.about-txt-side{padding:48px 24px}.about-img-side{padding:40px 24px}
+    .cta-section{padding:100px 24px}
+    footer{flex-direction:column;gap:20px;padding:40px 24px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav><a href="#" class="nav-logo">YENNA</a><ul class="nav-links"><li><a href="#">Gallery</a></li><li><a href="#">About</a></li><li><a href="#">Commission</a></li><li><a href="#">Contact</a></li></ul></nav>
+
+<!-- HERO: CURTAIN SPLIT -->
+<div class="hero-split-wrap"><div class="hero-split-pin" id="heroPin">
+  <div class="hero-revealed"><h2>Art made by <em>hand,</em><br>not machine</h2><p>Original paintings you can feel — real texture, real pigment, real presence on your walls.</p><a href="#" class="cta">View Collection →</a></div>
+  <div class="curtain-left" id="curtainL"></div><div class="curtain-right" id="curtainR"></div>
+  <div class="curtain-text" id="curtainText"><h1>Yelena<br><em>Khait</em></h1><div class="sub">Original Paintings</div></div>
+</div></div>
+
+<!-- GALLERY: FLIP CARDS -->
+<section class="gallery-section">
+  <h2 class="gallery-title" id="galTitle">Selected <em>Works</em></h2>
+  <p class="gallery-sub" id="galSub">Scroll to reveal — hover to explore details</p>
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-city-crowd.png" alt=""></div><div class="flip-back"><h4>Still Point</h4><span>Oil on Canvas</span><div class="dot"></div><p>A woman stands with eyes closed amid the chaos of a city crowd — finding peace in the noise.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-rainy-window.png" alt=""></div><div class="flip-back"><h4>Through the Glass</h4><span>Oil on Canvas</span><div class="dot"></div><p>City lights blur through rain-streaked glass — a quiet moment of beauty in an ordinary evening.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-sunflowers.png" alt=""></div><div class="flip-back"><h4>Sunset Visitors</h4><span>Acrylic on Canvas</span><div class="dot"></div><p>An endless sunflower field beneath a pink sky — with unexpected visitors hovering above.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-sedona-horses.png" alt=""></div><div class="flip-back"><h4>Cathedral Creek</h4><span>Acrylic on Canvas</span><div class="dot"></div><p>White horses drink from a creek beneath Cathedral Rock — Sedona's red rock landscape rendered in vivid detail.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-deer-circle.png" alt=""></div><div class="flip-back"><h4>Clearing</h4><span>Mixed Media on Round Canvas</span><div class="dot"></div><p>A deer stands in a shaft of light amid textured blue and gold — painted on a circular canvas with heavy impasto.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-fruit-still-life.png" alt=""></div><div class="flip-back"><h4>Harvest Table</h4><span>Oil on Canvas</span><div class="dot"></div><p>A classical still life — grapes, pears, and a crystal pedestal bowl rendered with meticulous realism.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-quarantine-still-life.png" alt=""></div><div class="flip-back"><h4>Signs of the Times</h4><span>Oil on Canvas</span><div class="dot"></div><p>Books, a face mask, and a smoking candle on draped satin — a still life that captures a moment in history.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-cat-portrait.png" alt=""></div><div class="flip-back"><h4>Companions</h4><span>Graphite on Paper</span><div class="dot"></div><p>A tender pencil drawing of a woman and her cat — detailed fur and a genuine smile in pure graphite.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-red-portrait.png" alt=""></div><div class="flip-back"><h4>Crimson Study</h4><span>Watercolor on Paper</span><div class="dot"></div><p>A bold portrait against deep crimson — the subject's gaze is rendered in confident, expressive strokes.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-blue-portrait.png" alt=""></div><div class="flip-back"><h4>Cerulean</h4><span>Watercolor on Paper</span><div class="dot"></div><p>A woman in blue — bold color, delicate features, and the unmistakable hand of a watercolor artist.</p></div></div></div>
+  </div>
+</section>
+
+<!-- TIKTOK -->
+<section class="tiktok-section" id="tiktokSection">
+  <h2 class="tiktok-title" id="ttTitle">Watch the <em>Process</em></h2>
+  <p class="tiktok-sub">See how each painting comes to life — from blank canvas to finished piece</p>
+  <div class="tiktok-grid">
+    <div class="tiktok-card"><video src="tiktok-1.mp4" playsinline muted loop></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="tiktok-2.mp4" playsinline muted loop></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="tiktok-3.mov" playsinline muted loop></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="tiktok-4.mp4" playsinline muted loop></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+  </div>
+  <a href="https://www.tiktok.com/@paintingartist2188" target="_blank" class="tiktok-follow">Follow on TikTok →</a>
+</section>
+
+<!-- ABOUT - CONCEPT 2 STYLE -->
+<section class="about-band" id="aboutBand">
+  <div class="about-img-side"><img src="artist-headshot.png" alt="Yenna" id="aboutImg"><div class="about-img-frame"></div></div>
+  <div class="about-txt-side" id="aboutTxt">
+    <div class="tag">About the Artist</div>
+    <h2>Every painting starts with <em>silence</em></h2>
+    <p>Yenna is a young painter who works entirely by hand. From city crowds to Sedona landscapes, classical still lifes to stormy abstracts — her range is matched only by her dedication to the physical medium.</p>
+    <p>In an age of screens, every brushstroke in Yenna's work is intentional. Every canvas holds real texture you can feel. Nothing is digital. Everything is real.</p>
+    <a href="#" class="read-link">Read Full Bio →</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="marquee-track" id="mqTrack">
+  <div class="marquee-item">Oil on Canvas <div class="m-dot"></div> Acrylic <div class="m-dot"></div> <em>Mixed Media</em> <div class="m-dot"></div> Watercolor <div class="m-dot"></div> Graphite <div class="m-dot"></div> Handcrafted <div class="m-dot"></div></div>
+  <div class="marquee-item">Oil on Canvas <div class="m-dot"></div> Acrylic <div class="m-dot"></div> <em>Mixed Media</em> <div class="m-dot"></div> Watercolor <div class="m-dot"></div> Graphite <div class="m-dot"></div> Handcrafted <div class="m-dot"></div></div>
+</div></div>
+
+<!-- CTA - CONCEPT 2 STYLE -->
+<section class="cta-section" id="ctaSec">
+  <div class="cta-ring" id="ctaRing"></div>
+  <div class="cta-inner" id="ctaInner"><h2>Your walls deserve<br><em>something real</em></h2><p>Commission a custom original painting. Share your vision, and Yenna will craft it by hand — a one-of-a-kind piece, just for you.</p><a href="#" class="cta-btn">Start a Commission</a></div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="footer-logo">YENNA</div><div class="footer-socials"><a href="#">TikTok</a><a href="#">Instagram</a><a href="#">YouTube</a></div><div class="footer-copy">© 2026 Yelena Khait</div></footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* CURTAIN SPLIT */
+const splitTl=gsap.timeline({scrollTrigger:{trigger:".hero-split-wrap",start:"top top",end:"bottom bottom",scrub:1,pin:"#heroPin",pinSpacing:false}});
+splitTl.to("#curtainL",{xPercent:-100,ease:"none",duration:1},0);
+splitTl.to("#curtainR",{xPercent:100,ease:"none",duration:1},0);
+splitTl.to("#curtainText",{scale:2.5,opacity:0,ease:"none",duration:.8},0);
+
+/* GALLERY */
+gsap.from("#galTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#galTitle",start:"top 95%",end:"top 60%",scrub:1}});
+gsap.from("#galSub",{y:30,opacity:0,scrollTrigger:{trigger:"#galSub",start:"top 95%",end:"top 65%",scrub:1}});
+
+document.querySelectorAll(".flip-card").forEach(card=>{
+  gsap.from(card.querySelector(".flip-inner"),{rotateY:-90,opacity:0,scrollTrigger:{trigger:card,start:"top 95%",end:"top 45%",scrub:1}});
+  card.addEventListener("mouseenter",()=>gsap.to(card.querySelector(".flip-inner"),{rotateY:180,duration:.6,ease:"power2.inOut"}));
+  card.addEventListener("mouseleave",()=>gsap.to(card.querySelector(".flip-inner"),{rotateY:0,duration:.6,ease:"power2.inOut"}));
+});
+
+/* TIKTOK */
+gsap.from("#ttTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#tiktokSection",start:"top 90%",end:"top 55%",scrub:1}});
+
+document.querySelectorAll(".tiktok-card").forEach(card=>{
+  const vid=card.querySelector("video");
+  const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){vid.play()}else{vid.pause()}},{threshold:0.3});
+  io.observe(card);
+  card.addEventListener("mouseenter",()=>{vid.muted=false});
+  card.addEventListener("mouseleave",()=>{vid.muted=true});
+});
+
+/* ABOUT */
+gsap.from("#aboutImg",{x:-80,opacity:0,scrollTrigger:{trigger:"#aboutBand",start:"top 90%",end:"top 25%",scrub:1}});
+gsap.from("#aboutTxt",{x:80,opacity:0,scrollTrigger:{trigger:"#aboutBand",start:"top 85%",end:"top 20%",scrub:1}});
+
+/* MARQUEE */
+const mqW=document.getElementById("mqTrack").scrollWidth/2;
+gsap.to("#mqTrack",{x:-mqW,ease:"none",duration:30,repeat:-1});
+
+/* CTA */
+gsap.from("#ctaInner",{scale:.5,opacity:0,scrollTrigger:{trigger:"#ctaSec",start:"top 90%",end:"top 25%",scrub:1}});
+gsap.to("#ctaRing",{scale:1.3,rotation:30,scrollTrigger:{trigger:"#ctaSec",start:"top bottom",end:"bottom top",scrub:true}});
+</script>
+</body>
+</html>
