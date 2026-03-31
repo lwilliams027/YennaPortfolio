@@ -12,24 +12,28 @@
   *{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden}body{font-family:var(--body);background:var(--bg);color:var(--charcoal)}
 
   /* ═══ NAV ═══ */
-  nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:20px 48px;background:rgba(240,239,235,0.85);backdrop-filter:blur(24px)}
-  .nav-logo{font-family:var(--display);font-size:24px;font-weight:700;color:var(--charcoal);text-decoration:none;letter-spacing:2px}
-  .nav-links{display:flex;gap:28px;list-style:none}.nav-links a{font-family:var(--body);font-size:12px;font-weight:300;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .3s}.nav-links a:hover{color:var(--accent-dim)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:650;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(240,239,235,0.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,0.04)}
+  .nav-logo{font-family:var(--display);font-size:20px;font-weight:700;color:var(--charcoal);text-decoration:none;letter-spacing:2px}
+  .nav-links{display:flex;gap:28px;list-style:none}.nav-links a{font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .3s}.nav-links a:hover{color:var(--accent-dim)}
 
-  /* Hamburger */
-  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;z-index:600}
-  .hamburger span{display:block;width:24px;height:2px;background:var(--charcoal);transition:all .3s}
-  .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-  .hamburger.open span:nth-child(2){opacity:0}
-  .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  /* Hamburger → X animation */
+  .hamburger{display:none;cursor:pointer;padding:8px;z-index:700;width:40px;height:40px;position:relative}
+  .hamburger span{position:absolute;left:50%;width:22px;height:2px;background:var(--charcoal);transform:translateX(-50%);transition:all .35s cubic-bezier(.4,.01,.165,.99)}
+  .hamburger span:nth-child(1){top:12px}
+  .hamburger span:nth-child(2){top:19px}
+  .hamburger span:nth-child(3){top:26px}
+  .hamburger.open span:nth-child(1){top:19px;transform:translateX(-50%) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0;transform:translateX(-50%) scaleX(0)}
+  .hamburger.open span:nth-child(3){top:19px;transform:translateX(-50%) rotate(-45deg)}
 
   /* Mobile menu overlay */
-  .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:550;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;opacity:0;pointer-events:none;transition:opacity .3s}
+  .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:80px 24px 40px;opacity:0;pointer-events:none;transition:opacity .3s}
   .mobile-menu.open{opacity:1;pointer-events:all}
-  .mobile-menu a{font-family:var(--display);font-size:36px;font-weight:400;color:var(--charcoal);text-decoration:none;transition:color .3s}
-  .mobile-menu a em{font-style:italic;color:var(--accent-dim)}
-  .mobile-menu .social-row{display:flex;gap:24px;margin-top:20px}
-  .mobile-menu .social-row a{font-family:var(--body);font-size:13px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--mid)}
+  .mobile-menu .menu-links{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6vh;list-style:none;flex:1;width:100%}
+  .mobile-menu .menu-links a{font-family:var(--display);font-size:clamp(32px,10vw,56px);font-weight:400;color:var(--charcoal);text-decoration:none;transition:color .3s}
+  .mobile-menu .menu-links a em{font-style:italic;color:var(--accent-dim)}
+  .mobile-menu .social-row{display:flex;gap:28px;padding-top:24px;border-top:1px solid var(--pale);width:100%;justify-content:center}
+  .mobile-menu .social-row a{font-family:var(--body);font-size:clamp(11px,3vw,14px);font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--mid);text-decoration:none}
 
   /* ═══ HERO ═══ */
   .hero-split-wrap{height:140vh;position:relative}.hero-split-pin{height:100vh;width:100%;position:relative;overflow:hidden}
@@ -74,8 +78,8 @@
   /* ═══ ABOUT ═══ */
   .about-band{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-top:1px solid var(--pale);border-bottom:1px solid var(--pale)}
   .about-img-side{background:var(--card);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px}
-  .about-img-side img{width:100%;max-width:360px;aspect-ratio:3/4;object-fit:cover;display:block;position:relative;z-index:2;box-shadow:0 16px 60px rgba(0,0,0,0.1)}
-  .about-img-frame{position:absolute;top:50%;left:50%;transform:translate(calc(-50% + 16px),calc(-50% + 16px));width:340px;height:440px;border:1px solid var(--accent-glow);z-index:1}
+  .about-img-side img{width:100%;max-width:400px;object-fit:contain;display:block;position:relative;z-index:2;box-shadow:0 16px 60px rgba(0,0,0,0.1)}
+  .about-img-frame{position:absolute;top:50%;left:50%;transform:translate(calc(-50% + 16px),calc(-50% + 16px));width:380px;height:520px;border:1px solid var(--accent-glow);z-index:1}
   .about-txt-side{display:flex;flex-direction:column;justify-content:center;padding:80px}
   .about-txt-side .tag{font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--accent-dim);margin-bottom:24px;display:flex;align-items:center;gap:12px}
   .about-txt-side .tag::before{content:'';width:32px;height:1px;background:var(--accent)}
@@ -97,10 +101,10 @@
   .cta-btn{display:inline-block;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--accent-dim);text-decoration:none;padding:18px 48px;transition:all .4s;box-shadow:0 4px 24px var(--accent-glow)}.cta-btn:hover{background:var(--charcoal);box-shadow:0 4px 24px rgba(0,0,0,0.15)}
 
   /* ═══ FOOTER ═══ */
-  footer{padding:56px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--pale)}
-  .footer-logo{font-family:var(--display);font-size:18px;font-weight:700;letter-spacing:2px}
-  .footer-socials{display:flex;gap:24px}.footer-socials a{font-family:var(--body);font-size:12px;color:var(--mid);text-decoration:none;transition:color .3s}.footer-socials a:hover{color:var(--accent-dim)}
-  .footer-copy{font-family:var(--body);font-size:11px;color:var(--light)}
+  footer{padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--pale)}
+  .footer-logo{font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:2px}
+  .footer-socials{display:flex;gap:20px}.footer-socials a{font-family:var(--body);font-size:11px;color:var(--mid);text-decoration:none;transition:color .3s}.footer-socials a:hover{color:var(--accent-dim)}
+  .footer-copy{font-family:var(--body);font-size:10px;color:var(--light)}
 
   /* ═══════════════════════════════════════
      MOBILE — TABLET (max 1024px)
@@ -117,9 +121,10 @@
      MOBILE — PHONE (max 768px)
   ═══════════════════════════════════════ */
   @media(max-width:768px){
-    nav{padding:16px 20px}
+    nav{padding:14px 20px}
+    .nav-logo{font-size:18px}
     .nav-links{display:none}
-    .hamburger{display:flex}
+    .hamburger{display:block}
 
     /* Hero */
     .curtain-text h1{font-size:clamp(40px,14vw,80px)}
@@ -151,7 +156,7 @@
     .about-band{grid-template-columns:1fr;min-height:auto}
     .about-img-side{padding:48px 24px;min-height:50vh}
     .about-img-side img{max-width:280px}
-    .about-img-frame{width:260px;height:350px}
+    .about-img-frame{width:280px;height:380px}
     .about-txt-side{padding:48px 24px}
     .about-txt-side h2{font-size:32px}
     .about-txt-side p{font-size:14px}
@@ -168,8 +173,8 @@
     .cta-btn{padding:16px 36px;font-size:12px}
     .cta-ring{width:80vw;height:80vw}
 
-    /* Footer — stacked */
-    footer{flex-direction:column;gap:20px;padding:40px 24px;text-align:center}
+    /* Footer — mobile */
+    footer{flex-direction:column;gap:16px;padding:24px 20px;text-align:center}
   }
 
   /* ═══════════════════════════════════════
@@ -201,10 +206,12 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#" onclick="closeMenu()">Gallery</a>
-  <a href="#" onclick="closeMenu()">About</a>
-  <a href="#" onclick="closeMenu()"><em>Commission</em></a>
-  <a href="#" onclick="closeMenu()">Contact</a>
+  <div class="menu-links">
+    <a href="#" onclick="closeMenu()">Gallery</a>
+    <a href="#" onclick="closeMenu()">About</a>
+    <a href="#" onclick="closeMenu()"><em>Commission</em></a>
+    <a href="#" onclick="closeMenu()">Contact</a>
+  </div>
   <div class="social-row">
     <a href="https://www.tiktok.com/@paintingartist2188" target="_blank">TikTok</a>
     <a href="https://www.instagram.com/yelenas__art" target="_blank">Instagram</a>
@@ -242,10 +249,10 @@
   <h2 class="tiktok-title" id="ttTitle">Watch the <em>Process</em></h2>
   <p class="tiktok-sub">See how each painting comes to life</p>
   <div class="tiktok-grid">
-    <div class="tiktok-card"><video src="tiktok-1.mp4" playsinline muted loop></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="tiktok-2.mp4" playsinline muted loop></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="tiktok-3.mov" playsinline muted loop></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="tiktok-4.mp4" playsinline muted loop></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="tiktok-1.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="tiktok-2.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="tiktok-3.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="tiktok-4.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
   </div>
   <a href="https://www.tiktok.com/@paintingartist2188" target="_blank" class="tiktok-follow">Follow on TikTok →</a>
 </section>
