@@ -9,7 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
   :root{--bg:#F0EFEB;--card:#E8E6E1;--white:#FAFAF8;--charcoal:#1A1A1A;--mid:#777;--light:#B8B8B8;--pale:#D6D4CF;--accent:#D4829A;--accent-dim:#C46B87;--accent-soft:rgba(212,130,154,0.12);--accent-glow:rgba(212,130,154,0.25);--display:'Playfair Display',Georgia,serif;--body:'Outfit',system-ui,sans-serif}
-  *{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden}body{font-family:var(--body);background:var(--bg);color:var(--charcoal)}
+  *{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}body{font-family:var(--body);background:var(--bg);color:var(--charcoal);min-height:100vh;min-height:-webkit-fill-available}
 
   /* ═══ NAV ═══ */
   nav{position:fixed;top:0;left:0;right:0;z-index:650;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(240,239,235,0.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,0.04)}
@@ -27,7 +27,7 @@
   .hamburger.open span:nth-child(3){top:19px;transform:translateX(-50%) rotate(-45deg)}
 
   /* Mobile menu overlay */
-  .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:80px 24px 40px;opacity:0;pointer-events:none;transition:opacity .3s}
+  .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:80px 24px 40px;opacity:0;pointer-events:none;transition:opacity .3s;height:100vh;height:100dvh}
   .mobile-menu.open{opacity:1;pointer-events:all}
   .mobile-menu .menu-links{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6vh;list-style:none;flex:1;width:100%}
   .mobile-menu .menu-links a{font-family:var(--display);font-size:clamp(32px,10vw,56px);font-weight:400;color:var(--charcoal);text-decoration:none;transition:color .3s}
@@ -36,7 +36,7 @@
   .mobile-menu .social-row a{font-family:var(--body);font-size:clamp(11px,3vw,14px);font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--mid);text-decoration:none}
 
   /* ═══ HERO ═══ */
-  .hero-split-wrap{height:140vh;position:relative}.hero-split-pin{height:100vh;width:100%;position:relative;overflow:hidden}
+  .hero-split-wrap{height:140vh;position:relative}.hero-split-pin{height:100vh;height:100dvh;width:100%;position:relative;overflow:hidden}
   .curtain-left,.curtain-right{position:absolute;top:0;bottom:0;width:50%;background:var(--charcoal);z-index:10}.curtain-left{left:0}.curtain-right{right:0}
   .curtain-text{position:absolute;top:50%;left:50%;z-index:20;transform:translate(-50%,-50%);text-align:center;white-space:nowrap}
   .curtain-text h1{font-family:var(--display);font-size:clamp(48px,10vw,140px);font-weight:900;color:var(--bg);line-height:.9}
@@ -295,6 +295,20 @@
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
+/* ORIENTATION / RESIZE FIX */
+let resizeTimer;
+window.addEventListener("resize",()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>{
+    ScrollTrigger.refresh(true);
+  },300);
+});
+window.addEventListener("orientationchange",()=>{
+  setTimeout(()=>ScrollTrigger.refresh(true),500);
+});
+
+function checkMobile(){return window.innerWidth<=768}
+
 /* HAMBURGER MENU */
 const hamburger=document.getElementById("hamburger");
 const mobileMenu=document.getElementById("mobileMenu");
@@ -310,61 +324,54 @@ function closeMenu(){
 }
 
 /* CURTAIN SPLIT */
-const splitTl=gsap.timeline({scrollTrigger:{trigger:".hero-split-wrap",start:"top top",end:"bottom bottom",scrub:1,pin:"#heroPin",pinSpacing:false}});
+const splitTl=gsap.timeline({scrollTrigger:{trigger:".hero-split-wrap",start:"top top",end:"bottom bottom",scrub:1,pin:"#heroPin",pinSpacing:false,invalidateOnRefresh:true}});
 splitTl.to("#curtainL",{xPercent:-100,ease:"none",duration:1},0);
 splitTl.to("#curtainR",{xPercent:100,ease:"none",duration:1},0);
 splitTl.to("#curtainText",{scale:2.5,opacity:0,ease:"none",duration:.8},0);
 
 /* GALLERY */
-gsap.from("#galTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#galTitle",start:"top 95%",end:"top 60%",scrub:1}});
-gsap.from("#galSub",{y:30,opacity:0,scrollTrigger:{trigger:"#galSub",start:"top 95%",end:"top 65%",scrub:1}});
-
-const isMobile=window.innerWidth<=768;
+gsap.from("#galTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#galTitle",start:"top 95%",end:"top 60%",scrub:1,invalidateOnRefresh:true}});
+gsap.from("#galSub",{y:30,opacity:0,scrollTrigger:{trigger:"#galSub",start:"top 95%",end:"top 65%",scrub:1,invalidateOnRefresh:true}});
 
 document.querySelectorAll(".flip-card").forEach(card=>{
-  gsap.from(card.querySelector(".flip-inner"),{rotateY:-90,opacity:0,scrollTrigger:{trigger:card,start:"top 95%",end:"top 45%",scrub:1}});
+  const inner=card.querySelector(".flip-inner");
+  let flipped=false;
 
-  if(isMobile){
-    // Tap to flip on mobile
-    let flipped=false;
-    card.addEventListener("click",()=>{
-      flipped=!flipped;
-      gsap.to(card.querySelector(".flip-inner"),{rotateY:flipped?180:0,duration:.6,ease:"power2.inOut"});
-    });
-  } else {
-    // Hover to flip on desktop
-    card.addEventListener("mouseenter",()=>gsap.to(card.querySelector(".flip-inner"),{rotateY:180,duration:.6,ease:"power2.inOut"}));
-    card.addEventListener("mouseleave",()=>gsap.to(card.querySelector(".flip-inner"),{rotateY:0,duration:.6,ease:"power2.inOut"}));
-  }
+  gsap.from(inner,{rotateY:-90,opacity:0,scrollTrigger:{trigger:card,start:"top 95%",end:"top 45%",scrub:1,invalidateOnRefresh:true}});
+
+  // Tap to flip (works on both mobile and desktop)
+  card.addEventListener("click",()=>{
+    flipped=!flipped;
+    gsap.to(inner,{rotateY:flipped?180:0,duration:.6,ease:"power2.inOut"});
+  });
+  // Hover to flip (desktop only, ignored on touch)
+  card.addEventListener("mouseenter",()=>{if(!checkMobile()){gsap.to(inner,{rotateY:180,duration:.6,ease:"power2.inOut"});flipped=true}});
+  card.addEventListener("mouseleave",()=>{if(!checkMobile()){gsap.to(inner,{rotateY:0,duration:.6,ease:"power2.inOut"});flipped=false}});
 });
 
 /* TIKTOK */
-gsap.from("#ttTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#tiktokSection",start:"top 90%",end:"top 55%",scrub:1}});
+gsap.from("#ttTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#tiktokSection",start:"top 90%",end:"top 55%",scrub:1,invalidateOnRefresh:true}});
 
 document.querySelectorAll(".tiktok-card").forEach(card=>{
   const vid=card.querySelector("video");
-  const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){vid.play()}else{vid.pause()}},{threshold:0.3});
+  const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){vid.play().catch(()=>{})}else{vid.pause()}},{threshold:0.3});
   io.observe(card);
-  if(!isMobile){
-    card.addEventListener("mouseenter",()=>{vid.muted=false});
-    card.addEventListener("mouseleave",()=>{vid.muted=true});
-  } else {
-    // Tap to toggle sound on mobile
-    card.addEventListener("click",()=>{vid.muted=!vid.muted});
-  }
+  card.addEventListener("mouseenter",()=>{if(!checkMobile())vid.muted=false});
+  card.addEventListener("mouseleave",()=>{if(!checkMobile())vid.muted=true});
+  card.addEventListener("click",()=>{if(checkMobile())vid.muted=!vid.muted});
 });
 
 /* ABOUT */
-gsap.from("#aboutImg",{x:isMobile?0:-80,y:isMobile?40:0,opacity:0,scrollTrigger:{trigger:"#aboutBand",start:"top 90%",end:"top 25%",scrub:1}});
-gsap.from("#aboutTxt",{x:isMobile?0:80,y:isMobile?40:0,opacity:0,scrollTrigger:{trigger:"#aboutBand",start:"top 85%",end:"top 20%",scrub:1}});
+gsap.from("#aboutImg",{x:-80,opacity:0,scrollTrigger:{trigger:"#aboutBand",start:"top 90%",end:"top 25%",scrub:1,invalidateOnRefresh:true}});
+gsap.from("#aboutTxt",{x:80,opacity:0,scrollTrigger:{trigger:"#aboutBand",start:"top 85%",end:"top 20%",scrub:1,invalidateOnRefresh:true}});
 
 /* MARQUEE */
 const mqW=document.getElementById("mqTrack").scrollWidth/2;
 gsap.to("#mqTrack",{x:-mqW,ease:"none",duration:30,repeat:-1});
 
 /* CTA */
-gsap.from("#ctaInner",{scale:.5,opacity:0,scrollTrigger:{trigger:"#ctaSec",start:"top 90%",end:"top 25%",scrub:1}});
-gsap.to("#ctaRing",{scale:1.3,rotation:30,scrollTrigger:{trigger:"#ctaSec",start:"top bottom",end:"bottom top",scrub:true}});
+gsap.from("#ctaInner",{scale:.5,opacity:0,scrollTrigger:{trigger:"#ctaSec",start:"top 90%",end:"top 25%",scrub:1,invalidateOnRefresh:true}});
+gsap.to("#ctaRing",{scale:1.3,rotation:30,scrollTrigger:{trigger:"#ctaSec",start:"top bottom",end:"bottom top",scrub:true,invalidateOnRefresh:true}});
 </script>
 </body>
 </html>
