@@ -9,7 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
   :root{--bg:#F0EFEB;--card:#E8E6E1;--white:#FAFAF8;--charcoal:#1A1A1A;--mid:#777;--light:#B8B8B8;--pale:#D6D4CF;--accent:#D4829A;--accent-dim:#C46B87;--accent-soft:rgba(212,130,154,0.12);--accent-glow:rgba(212,130,154,0.25);--display:'Playfair Display',Georgia,serif;--body:'Outfit',system-ui,sans-serif}
-  *{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}body{font-family:var(--body);background:var(--bg);color:var(--charcoal);min-height:100vh;min-height:-webkit-fill-available}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}body{font-family:var(--body);background:var(--bg);color:var(--charcoal);min-height:100vh;min-height:-webkit-fill-available}
 
   /* ═══ NAV ═══ */
   nav{position:fixed;top:0;left:0;right:0;z-index:650;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(240,239,235,0.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,0.04)}
@@ -37,8 +37,8 @@
 
   /* ═══ HERO ═══ */
   .hero-split-wrap{height:140vh;position:relative}.hero-split-pin{height:100vh;height:100dvh;width:100%;position:relative;overflow:hidden}
-  .curtain-left,.curtain-right{position:absolute;top:0;bottom:0;width:50%;background:var(--charcoal);z-index:10}.curtain-left{left:0}.curtain-right{right:0}
-  .curtain-text{position:absolute;top:50%;left:50%;z-index:20;transform:translate(-50%,-50%);text-align:center;white-space:nowrap}
+  .curtain-left,.curtain-right{position:absolute;top:0;bottom:0;width:50%;background:var(--charcoal);z-index:10;pointer-events:none}.curtain-left{left:0}.curtain-right{right:0}
+  .curtain-text{position:absolute;top:50%;left:50%;z-index:20;transform:translate(-50%,-50%);text-align:center;white-space:nowrap;pointer-events:none}
   .curtain-text h1{font-family:var(--display);font-size:clamp(48px,10vw,140px);font-weight:900;color:var(--bg);line-height:.9}
   .curtain-text h1 em{font-weight:400;font-style:italic;color:var(--accent)}
   .curtain-text .sub{font-family:var(--body);font-size:13px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-top:20px}
@@ -221,13 +221,13 @@
 
 <!-- HERO -->
 <div class="hero-split-wrap"><div class="hero-split-pin" id="heroPin">
-  <div class="hero-revealed"><h2>Art made by the hands of <em>Yelena Khait</em></h2><p>Original paintings, portraits, custom shoes, drawings, anything you like.</p><a href="#" class="cta">Original ArtWorks →</a></div>
+  <div class="hero-revealed"><h2>Art made by the hands of <em>Yelena Khait</em></h2><p>Original paintings, portraits, custom shoes, drawings, anything you like.</p><a href="#gallery" class="cta">Original ArtWorks →</a></div>
   <div class="curtain-left" id="curtainL"></div><div class="curtain-right" id="curtainR"></div>
   <div class="curtain-text" id="curtainText"><h1>Yelena<br><em>Khait</em></h1><div class="sub">Original Paintings</div></div>
 </div></div>
 
 <!-- GALLERY -->
-<section class="gallery-section">
+<section class="gallery-section" id="gallery">
   <h2 class="gallery-title" id="galTitle">Selected <em>Works</em></h2>
   <p class="gallery-sub" id="galSub">Tap to reveal details</p>
   <div class="flip-grid">
