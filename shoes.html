@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yelena — Custom Shoes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  :root{--bg:#F0EFEB;--card:#E8E6E1;--white:#FAFAF8;--charcoal:#1A1A1A;--mid:#777;--light:#B8B8B8;--pale:#D6D4CF;--accent:#D4829A;--accent-dim:#C46B87;--accent-soft:rgba(212,130,154,0.12);--accent-glow:rgba(212,130,154,0.25);--display:'Playfair Display',Georgia,serif;--body:'Outfit',system-ui,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}body{font-family:var(--body);background:var(--bg);color:var(--charcoal);min-height:100vh}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:650;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(240,239,235,0.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,0.04)}
+  .nav-logo{font-family:var(--display);font-size:20px;font-weight:700;color:var(--charcoal);text-decoration:none;letter-spacing:2px}
+  .nav-links{display:flex;gap:28px;list-style:none}.nav-links a{font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .3s}.nav-links a:hover,.nav-links a.active{color:var(--accent-dim)}
+  .hamburger{display:none;cursor:pointer;padding:8px;z-index:700;width:40px;height:40px;position:relative}
+  .hamburger span{position:absolute;left:50%;width:22px;height:2px;background:var(--charcoal);transform:translateX(-50%);transition:all .35s cubic-bezier(.4,.01,.165,.99)}
+  .hamburger span:nth-child(1){top:12px}.hamburger span:nth-child(2){top:19px}.hamburger span:nth-child(3){top:26px}
+  .hamburger.open span:nth-child(1){top:19px;transform:translateX(-50%) rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0;transform:translateX(-50%) scaleX(0)}.hamburger.open span:nth-child(3){top:19px;transform:translateX(-50%) rotate(-45deg)}
+  .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:80px 24px 40px;opacity:0;pointer-events:none;transition:opacity .3s;height:100vh;height:100dvh}
+  .mobile-menu.open{opacity:1;pointer-events:all}
+  .mobile-menu .menu-links{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6vh;list-style:none;flex:1;width:100%}
+  .mobile-menu .menu-links a{font-family:var(--display);font-size:clamp(32px,10vw,56px);font-weight:400;color:var(--charcoal);text-decoration:none}.mobile-menu .menu-links a em{font-style:italic;color:var(--accent-dim)}
+  .mobile-menu .social-row{display:flex;gap:28px;padding-top:24px;border-top:1px solid var(--pale);width:100%;justify-content:center}
+  .mobile-menu .social-row a{font-family:var(--body);font-size:clamp(11px,3vw,14px);font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--mid);text-decoration:none}
+
+  .page-hero{padding:160px 48px 80px;text-align:center}
+  .page-hero h1{font-family:var(--display);font-size:clamp(44px,8vw,80px);font-weight:400;margin-bottom:16px}.page-hero h1 em{font-style:italic;color:var(--accent-dim)}
+  .page-hero p{font-family:var(--body);font-size:16px;font-weight:200;color:var(--mid);max-width:520px;margin:0 auto;line-height:1.7}
+
+  .shoe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:0 48px 120px;max-width:1200px;margin:0 auto}
+  .shoe-card{background:var(--card);border-radius:12px;overflow:hidden;transition:transform .3s}
+  .shoe-card:hover{transform:translateY(-4px)}
+  .shoe-card .shoe-img{width:100%;aspect-ratio:1/1;background:var(--pale);display:flex;align-items:center;justify-content:center;font-family:var(--body);font-size:13px;color:var(--light);letter-spacing:1px}
+  .shoe-card .shoe-info{padding:24px}
+  .shoe-card h3{font-family:var(--display);font-size:22px;font-weight:400;margin-bottom:4px}
+  .shoe-card .medium{font-family:var(--body);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-dim);margin-bottom:12px}
+  .shoe-card p{font-family:var(--body);font-size:13px;font-weight:300;color:var(--mid);line-height:1.6}
+
+  .coming-soon{text-align:center;padding:80px 48px}
+  .coming-soon p{font-family:var(--body);font-size:15px;color:var(--mid);margin-bottom:32px}
+  .coming-soon .cta-btn{display:inline-block;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--accent-dim);text-decoration:none;padding:18px 48px;transition:all .4s;box-shadow:0 4px 24px var(--accent-glow)}.coming-soon .cta-btn:hover{background:var(--charcoal)}
+
+  footer{padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--pale)}
+  .footer-logo{font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:2px}
+  .footer-socials{display:flex;gap:20px}.footer-socials a{font-family:var(--body);font-size:11px;color:var(--mid);text-decoration:none;transition:color .3s}.footer-socials a:hover{color:var(--accent-dim)}
+  .footer-copy{font-family:var(--body);font-size:10px;color:var(--light)}
+
+  @media(max-width:768px){
+    nav{padding:14px 20px}.nav-logo{font-size:18px}.nav-links{display:none}.hamburger{display:block}
+    .page-hero{padding:120px 24px 48px}.page-hero p{font-size:14px}
+    .shoe-grid{grid-template-columns:1fr 1fr;gap:16px;padding:0 16px 80px}
+    footer{flex-direction:column;gap:16px;padding:24px 20px;text-align:center}
+  }
+  @media(max-width:420px){.shoe-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">YELENA</a>
+  <ul class="nav-links"><li><a href="index.html#gallery">Gallery</a></li><li><a href="shoes.html" class="active">Shoes</a></li><li><a href="abstract.html">Abstract</a></li><li><a href="commission.html">Commission</a></li></ul>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="menu-links"><a href="index.html#gallery">Gallery</a><a href="shoes.html">Shoes</a><a href="abstract.html">Abstract</a><a href="commission.html"><em>Commission</em></a></div>
+  <div class="social-row"><a href="https://www.tiktok.com/@paintingartist2188" target="_blank">TikTok</a><a href="https://www.instagram.com/yelenas__art" target="_blank">Instagram</a><a href="https://youtube.com/@yelenakhait6520" target="_blank">YouTube</a></div>
+</div>
+
+<div class="page-hero">
+  <h1>Custom <em>Shoes</em></h1>
+  <p>Wearable art — hand-painted shoes designed and created by Yelena. Each pair is one of a kind, made just for you.</p>
+</div>
+
+<div class="shoe-grid" id="shoeGrid">
+  <div class="shoe-card"><div class="shoe-img">Coming Soon</div><div class="shoe-info"><h3>Your Design Here</h3><div class="medium">Hand-Painted</div><p>Send Yelena your vision and she'll paint it onto a pair of shoes — sneakers, Vans, boots, anything.</p></div></div>
+  <div class="shoe-card"><div class="shoe-img">Coming Soon</div><div class="shoe-info"><h3>Any Style</h3><div class="medium">Fully Custom</div><p>Portraits, landscapes, abstract patterns, anime, florals — if you can dream it, she can paint it.</p></div></div>
+  <div class="shoe-card"><div class="shoe-img">Coming Soon</div><div class="shoe-info"><h3>Built to Last</h3><div class="medium">Sealed & Protected</div><p>Every pair is sealed with a protective finish so your wearable art stays vibrant wear after wear.</p></div></div>
+</div>
+
+<div class="coming-soon">
+  <p>Photos of completed custom shoes are coming soon. In the meantime, send your idea and get started.</p>
+  <a href="commission.html" class="cta-btn">Order Custom Shoes</a>
+</div>
+
+<footer>
+  <div class="footer-logo">YELENA</div>
+  <div class="footer-socials"><a href="https://www.tiktok.com/@paintingartist2188" target="_blank">TikTok</a><a href="https://www.instagram.com/yelenas__art" target="_blank">Instagram</a><a href="https://youtube.com/@yelenakhait6520" target="_blank">YouTube</a></div>
+  <div class="footer-copy">© 2026 Yelena Khait</div>
+</footer>
+
+<script>
+const hamburger=document.getElementById("hamburger");const mobileMenu=document.getElementById("mobileMenu");
+hamburger.addEventListener("click",()=>{hamburger.classList.toggle("open");mobileMenu.classList.toggle("open");document.body.style.overflow=mobileMenu.classList.contains("open")?"hidden":""});
+
+gsap.registerPlugin(ScrollTrigger);
+document.querySelectorAll(".shoe-card").forEach((card,i)=>{
+  gsap.from(card,{y:60,opacity:0,delay:i*.1,scrollTrigger:{trigger:card,start:"top 90%",end:"top 50%",scrub:1}});
+});
+</script>
+</body>
+</html>

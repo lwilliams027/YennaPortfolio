@@ -9,7 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
   :root{--bg:#F0EFEB;--card:#E8E6E1;--white:#FAFAF8;--charcoal:#1A1A1A;--mid:#777;--light:#B8B8B8;--pale:#D6D4CF;--accent:#D4829A;--accent-dim:#C46B87;--accent-soft:rgba(212,130,154,0.12);--accent-glow:rgba(212,130,154,0.25);--display:'Playfair Display',Georgia,serif;--body:'Outfit',system-ui,sans-serif}
-  *{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}body{font-family:var(--body);background:var(--bg);color:var(--charcoal);min-height:100vh;min-height:-webkit-fill-available}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}body{font-family:var(--body);background:var(--bg);color:var(--charcoal);min-height:100vh;min-height:-webkit-fill-available}
 
   /* ═══ NAV ═══ */
   nav{position:fixed;top:0;left:0;right:0;z-index:650;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(240,239,235,0.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,0.04)}
@@ -37,8 +37,8 @@
 
   /* ═══ HERO ═══ */
   .hero-split-wrap{height:140vh;position:relative}.hero-split-pin{height:100vh;height:100dvh;width:100%;position:relative;overflow:hidden}
-  .curtain-left,.curtain-right{position:absolute;top:0;bottom:0;width:50%;background:var(--charcoal);z-index:10}.curtain-left{left:0}.curtain-right{right:0}
-  .curtain-text{position:absolute;top:50%;left:50%;z-index:20;transform:translate(-50%,-50%);text-align:center;white-space:nowrap}
+  .curtain-left,.curtain-right{position:absolute;top:0;bottom:0;width:50%;background:var(--charcoal);z-index:10;pointer-events:none}.curtain-left{left:0}.curtain-right{right:0}
+  .curtain-text{position:absolute;top:50%;left:50%;z-index:20;transform:translate(-50%,-50%);text-align:center;white-space:nowrap;pointer-events:none}
   .curtain-text h1{font-family:var(--display);font-size:clamp(48px,10vw,140px);font-weight:900;color:var(--bg);line-height:.9}
   .curtain-text h1 em{font-weight:400;font-style:italic;color:var(--accent)}
   .curtain-text .sub{font-family:var(--body);font-size:13px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-top:20px}
@@ -200,17 +200,17 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">YELENA</a>
-  <ul class="nav-links"><li><a href="#">Gallery</a></li><li><a href="#">About</a></li><li><a href="#">Commission</a></li><li><a href="#">Contact</a></li></ul>
+  <ul class="nav-links"><li><a href="index.html#gallery">Gallery</a></li><li><a href="shoes.html">Shoes</a></li><li><a href="abstract.html">Abstract</a></li><li><a href="commission.html">Commission</a></li></ul>
   <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="menu-links">
-    <a href="#" onclick="closeMenu()">Gallery</a>
-    <a href="#" onclick="closeMenu()">About</a>
-    <a href="#" onclick="closeMenu()"><em>Commission</em></a>
-    <a href="#" onclick="closeMenu()">Contact</a>
+    <a href="index.html#gallery" onclick="closeMenu()">Gallery</a>
+    <a href="shoes.html" onclick="closeMenu()">Shoes</a>
+    <a href="abstract.html" onclick="closeMenu()">Abstract</a>
+    <a href="commission.html" onclick="closeMenu()"><em>Commission</em></a>
   </div>
   <div class="social-row">
     <a href="https://www.tiktok.com/@paintingartist2188" target="_blank">TikTok</a>
@@ -221,26 +221,26 @@
 
 <!-- HERO -->
 <div class="hero-split-wrap"><div class="hero-split-pin" id="heroPin">
-  <div class="hero-revealed"><h2>Art made by <em>hand,</em><br>not machine</h2><p>Original paintings you can feel — real texture, real pigment, real presence on your walls.</p><a href="#" class="cta">View Collection →</a></div>
+  <div class="hero-revealed"><h2>Art made by the hands of <em>Yelena Khait</em></h2><p>Original paintings, portraits, custom shoes, drawings, anything you like.</p><a href="#gallery" class="cta">Original ArtWorks →</a></div>
   <div class="curtain-left" id="curtainL"></div><div class="curtain-right" id="curtainR"></div>
   <div class="curtain-text" id="curtainText"><h1>Yelena<br><em>Khait</em></h1><div class="sub">Original Paintings</div></div>
 </div></div>
 
 <!-- GALLERY -->
-<section class="gallery-section">
+<section class="gallery-section" id="gallery">
   <h2 class="gallery-title" id="galTitle">Selected <em>Works</em></h2>
-  <p class="gallery-sub" id="galSub">Scroll to reveal — tap to explore details</p>
+  <p class="gallery-sub" id="galSub">Tap to reveal details</p>
   <div class="flip-grid">
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-city-crowd.png" alt=""></div><div class="flip-back"><h4>Still Point</h4><span>Oil on Canvas</span><div class="dot"></div><p>A woman stands with eyes closed amid the chaos of a city crowd — finding peace in the noise.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-rainy-window.png" alt=""></div><div class="flip-back"><h4>Through the Glass</h4><span>Oil on Canvas</span><div class="dot"></div><p>City lights blur through rain-streaked glass — a quiet moment of beauty in an ordinary evening.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-sunflowers.png" alt=""></div><div class="flip-back"><h4>Sunset Visitors</h4><span>Acrylic on Canvas</span><div class="dot"></div><p>An endless sunflower field beneath a pink sky — with unexpected visitors hovering above.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-sedona-horses.png" alt=""></div><div class="flip-back"><h4>Cathedral Creek</h4><span>Acrylic on Canvas</span><div class="dot"></div><p>White horses drink from a creek beneath Cathedral Rock — Sedona rendered in vivid detail.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-deer-circle.png" alt=""></div><div class="flip-back"><h4>Clearing</h4><span>Mixed Media on Round Canvas</span><div class="dot"></div><p>A deer stands in a shaft of light amid textured blue and gold — heavy impasto on circular canvas.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-fruit-still-life.png" alt=""></div><div class="flip-back"><h4>Harvest Table</h4><span>Oil on Canvas</span><div class="dot"></div><p>A classical still life — grapes, pears, and a crystal pedestal bowl rendered with meticulous realism.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-quarantine-still-life.png" alt=""></div><div class="flip-back"><h4>Signs of the Times</h4><span>Oil on Canvas</span><div class="dot"></div><p>Books, a face mask, and a smoking candle on draped satin — a moment in history.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-cat-portrait.png" alt=""></div><div class="flip-back"><h4>Companions</h4><span>Graphite on Paper</span><div class="dot"></div><p>A tender pencil drawing of a woman and her cat — pure graphite detail.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-red-portrait.png" alt=""></div><div class="flip-back"><h4>Crimson Study</h4><span>Watercolor on Paper</span><div class="dot"></div><p>A bold portrait against deep crimson — confident, expressive strokes.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-blue-portrait.png" alt=""></div><div class="flip-back"><h4>Cerulean</h4><span>Watercolor on Paper</span><div class="dot"></div><p>A woman in blue — bold color, delicate features, the unmistakable hand of watercolor.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-city-crowd.png" alt="Breath"></div><div class="flip-back"><h4>Breath</h4><span>Oil on Canvas</span><div class="dot"></div><p>An oil painting capturing a young woman taking in a breath in the middle of a chaotic world.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-rainy-window.png" alt="Rainy Day"></div><div class="flip-back"><h4>Rainy Day</h4><span>Oil on Canvas</span><div class="dot"></div><p>An oil painting capturing the gentle raindrops on a window with rich colors evoking a sense of calm.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-sunflowers.png" alt="Sunflower Field"></div><div class="flip-back"><h4>Sunflower Field</h4><span>Acrylic on Canvas · Commission</span><div class="dot"></div><p>An acrylic painting commission that captures a sunflower field — look close enough and you'll find aliens and an alien ship.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-sedona-horses.png" alt="Horses on a Creek"></div><div class="flip-back"><h4>Horses on a Creek</h4><span>Acrylic on Canvas</span><div class="dot"></div><p>An acrylic painting of Oak Creek Canyon that captures the beautiful landscape.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-deer-circle.png" alt="Ethereal"></div><div class="flip-back"><h4>Ethereal</h4><span>Textured Acrylic on Round Canvas</span><div class="dot"></div><p>Textured acrylic painting with hints of gold on a round canvas.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-fruit-still-life.png" alt="Fruit Harvest"></div><div class="flip-back"><h4>Fruit Harvest</h4><span>Oil on Canvas</span><div class="dot"></div><p>Still life oil painting of fruits in a beautiful bowl.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-quarantine-still-life.png" alt="Pandemic"></div><div class="flip-back"><h4>Pandemic</h4><span>Oil on Canvas</span><div class="dot"></div><p>Still life oil painting capturing the tragic time in our lives.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-cat-portrait.png" alt="Murzik"></div><div class="flip-back"><h4>Murzik</h4><span>Pencil on Paper</span><div class="dot"></div><p>A pencil portrait drawn in memory of my senior cat passing away.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-red-portrait.png" alt="Man Against Red"></div><div class="flip-back"><h4>Man Against Red</h4><span>Watercolor on Paper</span><div class="dot"></div><p>A watercolor portrait of a masculine figure with a bold, emotive red background.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="art-blue-portrait.png" alt="Cerulean"></div><div class="flip-back"><h4>Cerulean</h4><span>Watercolor on Paper</span><div class="dot"></div><p>Watercolor on paper, capturing the beauty of the woman.</p></div></div></div>
   </div>
 </section>
 
@@ -262,9 +262,9 @@
   <div class="about-img-side"><img src="artist-headshot.png" alt="Yelena" id="aboutImg"><div class="about-img-frame"></div></div>
   <div class="about-txt-side" id="aboutTxt">
     <div class="tag">About the Artist</div>
-    <h2>Every painting starts with <em>silence</em></h2>
-    <p>Yelena is a young painter who works entirely by hand. From city crowds to Sedona landscapes, classical still lifes to stormy abstracts — her range is matched only by her dedication to the physical medium.</p>
-    <p>In an age of screens, every brushstroke in Yelena's work is intentional. Every canvas holds real texture you can feel. Nothing is digital. Everything is real.</p>
+    <h2>Every painting starts with <em>inspiration</em></h2>
+    <p>Yelena is from a small town in Michigan, and she spends her days creating art at home. From hyper-realistic paintings, classic still lifes, to custom-painted shoes, she loves trying out new styles and challenging herself to do more.</p>
+    <p>In an age of screens and AI at your fingertips, every brush stroke in Yelena's work is real. Every art piece holds years of dedication and practice.</p>
     <a href="#" class="read-link">Read Full Bio →</a>
   </div>
 </section>
@@ -337,16 +337,21 @@ document.querySelectorAll(".flip-card").forEach(card=>{
   const inner=card.querySelector(".flip-inner");
   let flipped=false;
 
-  gsap.from(inner,{rotateY:-90,opacity:0,scrollTrigger:{trigger:card,start:"top 95%",end:"top 45%",scrub:1,invalidateOnRefresh:true}});
+  gsap.from(card,{y:60,opacity:0,scrollTrigger:{trigger:card,start:"top 95%",end:"top 55%",scrub:1,invalidateOnRefresh:true}});
 
-  // Tap to flip (works on both mobile and desktop)
+  // Tap to flip
   card.addEventListener("click",()=>{
     flipped=!flipped;
+    gsap.set(inner,{clearProps:"rotateY"});
     gsap.to(inner,{rotateY:flipped?180:0,duration:.6,ease:"power2.inOut"});
   });
-  // Hover to flip (desktop only, ignored on touch)
-  card.addEventListener("mouseenter",()=>{if(!checkMobile()){gsap.to(inner,{rotateY:180,duration:.6,ease:"power2.inOut"});flipped=true}});
-  card.addEventListener("mouseleave",()=>{if(!checkMobile()){gsap.to(inner,{rotateY:0,duration:.6,ease:"power2.inOut"});flipped=false}});
+  // Hover to flip (desktop only)
+  card.addEventListener("mouseenter",()=>{
+    if(!checkMobile()){flipped=true;gsap.to(inner,{rotateY:180,duration:.6,ease:"power2.inOut"})}
+  });
+  card.addEventListener("mouseleave",()=>{
+    if(!checkMobile()){flipped=false;gsap.to(inner,{rotateY:0,duration:.6,ease:"power2.inOut"})}
+  });
 });
 
 /* TIKTOK */

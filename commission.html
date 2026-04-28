@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yelena — Commission</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  :root{--bg:#F0EFEB;--card:#E8E6E1;--white:#FAFAF8;--charcoal:#1A1A1A;--mid:#777;--light:#B8B8B8;--pale:#D6D4CF;--accent:#D4829A;--accent-dim:#C46B87;--accent-soft:rgba(212,130,154,0.12);--accent-glow:rgba(212,130,154,0.25);--display:'Playfair Display',Georgia,serif;--body:'Outfit',system-ui,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}body{font-family:var(--body);background:var(--bg);color:var(--charcoal);min-height:100vh}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:650;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(240,239,235,0.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,0.04)}
+  .nav-logo{font-family:var(--display);font-size:20px;font-weight:700;color:var(--charcoal);text-decoration:none;letter-spacing:2px}
+  .nav-links{display:flex;gap:28px;list-style:none}.nav-links a{font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .3s}.nav-links a:hover,.nav-links a.active{color:var(--accent-dim)}
+  .hamburger{display:none;cursor:pointer;padding:8px;z-index:700;width:40px;height:40px;position:relative}
+  .hamburger span{position:absolute;left:50%;width:22px;height:2px;background:var(--charcoal);transform:translateX(-50%);transition:all .35s cubic-bezier(.4,.01,.165,.99)}
+  .hamburger span:nth-child(1){top:12px}.hamburger span:nth-child(2){top:19px}.hamburger span:nth-child(3){top:26px}
+  .hamburger.open span:nth-child(1){top:19px;transform:translateX(-50%) rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0;transform:translateX(-50%) scaleX(0)}.hamburger.open span:nth-child(3){top:19px;transform:translateX(-50%) rotate(-45deg)}
+  .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:80px 24px 40px;opacity:0;pointer-events:none;transition:opacity .3s;height:100vh;height:100dvh}
+  .mobile-menu.open{opacity:1;pointer-events:all}
+  .mobile-menu .menu-links{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6vh;list-style:none;flex:1;width:100%}
+  .mobile-menu .menu-links a{font-family:var(--display);font-size:clamp(32px,10vw,56px);font-weight:400;color:var(--charcoal);text-decoration:none}.mobile-menu .menu-links a em{font-style:italic;color:var(--accent-dim)}
+  .mobile-menu .social-row{display:flex;gap:28px;padding-top:24px;border-top:1px solid var(--pale);width:100%;justify-content:center}
+  .mobile-menu .social-row a{font-family:var(--body);font-size:clamp(11px,3vw,14px);font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--mid);text-decoration:none}
+
+  .page-hero{padding:160px 48px 40px;text-align:center}
+  .page-hero h1{font-family:var(--display);font-size:clamp(44px,8vw,80px);font-weight:400;margin-bottom:16px}.page-hero h1 em{font-style:italic;color:var(--accent-dim)}
+  .page-hero p{font-family:var(--body);font-size:16px;font-weight:200;color:var(--mid);max-width:560px;margin:0 auto;line-height:1.7}
+
+  /* HOW IT WORKS */
+  .how-it-works{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:80px 48px;max-width:1000px;margin:0 auto}
+  .step{text-align:center}
+  .step .step-num{font-family:var(--display);font-size:48px;font-weight:300;color:var(--accent-glow);margin-bottom:12px}
+  .step h3{font-family:var(--display);font-size:24px;font-weight:400;margin-bottom:8px}
+  .step p{font-family:var(--body);font-size:13px;font-weight:300;color:var(--mid);line-height:1.7}
+
+  /* FORM */
+  .form-section{max-width:680px;margin:0 auto;padding:80px 48px 120px}
+  .form-section h2{font-family:var(--display);font-size:36px;font-weight:400;margin-bottom:8px;text-align:center}.form-section h2 em{font-style:italic;color:var(--accent-dim)}
+  .form-section>p{font-family:var(--body);font-size:14px;color:var(--mid);text-align:center;margin-bottom:48px}
+
+  .form-group{margin-bottom:28px}
+  .form-group label{display:block;font-family:var(--body);font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:var(--charcoal);margin-bottom:8px}
+  .form-group input,.form-group select,.form-group textarea{width:100%;font-family:var(--body);font-size:14px;font-weight:300;color:var(--charcoal);background:var(--white);border:1px solid var(--pale);padding:14px 16px;outline:none;transition:border-color .3s;-webkit-appearance:none;border-radius:0}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+  .form-group textarea{resize:vertical;min-height:140px}
+  .form-group select{cursor:pointer}
+  .form-group .hint{font-family:var(--body);font-size:11px;color:var(--light);margin-top:6px}
+
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+
+  .form-submit{display:block;width:100%;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--accent-dim);border:none;padding:18px;cursor:pointer;transition:all .4s;box-shadow:0 4px 24px var(--accent-glow);margin-top:40px}
+  .form-submit:hover{background:var(--charcoal)}
+
+  .form-success{display:none;text-align:center;padding:60px 24px}
+  .form-success h3{font-family:var(--display);font-size:32px;font-weight:400;margin-bottom:12px}.form-success h3 em{font-style:italic;color:var(--accent-dim)}
+  .form-success p{font-family:var(--body);font-size:15px;color:var(--mid);line-height:1.7}
+
+  /* EXAMPLES */
+  .examples{padding:0 48px 80px}
+  .examples-title{text-align:center;font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--accent-dim);margin-bottom:32px;display:flex;align-items:center;justify-content:center;gap:16px}
+  .examples-title::before,.examples-title::after{content:'';width:40px;height:1px;background:var(--accent)}
+  .examples-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin:0 auto}
+  .examples-grid img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .3s}
+  .examples-grid img:hover{transform:scale(1.02)}
+
+  footer{padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--pale)}
+  .footer-logo{font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:2px}
+  .footer-socials{display:flex;gap:20px}.footer-socials a{font-family:var(--body);font-size:11px;color:var(--mid);text-decoration:none;transition:color .3s}.footer-socials a:hover{color:var(--accent-dim)}
+  .footer-copy{font-family:var(--body);font-size:10px;color:var(--light)}
+
+  @media(max-width:768px){
+    nav{padding:14px 20px}.nav-logo{font-size:18px}.nav-links{display:none}.hamburger{display:block}
+    .page-hero{padding:120px 24px 32px}.page-hero p{font-size:14px}
+    .how-it-works{grid-template-columns:1fr;gap:32px;padding:48px 24px}
+    .form-section{padding:48px 24px 80px}
+    .form-row{grid-template-columns:1fr}
+    .examples{padding:0 16px 60px}.examples-grid{grid-template-columns:1fr 1fr;gap:12px}
+    footer{flex-direction:column;gap:16px;padding:24px 20px;text-align:center}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">YELENA</a>
+  <ul class="nav-links"><li><a href="index.html#gallery">Gallery</a></li><li><a href="shoes.html">Shoes</a></li><li><a href="abstract.html">Abstract</a></li><li><a href="commission.html" class="active">Commission</a></li></ul>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="menu-links"><a href="index.html#gallery">Gallery</a><a href="shoes.html">Shoes</a><a href="abstract.html">Abstract</a><a href="commission.html"><em>Commission</em></a></div>
+  <div class="social-row"><a href="https://www.tiktok.com/@paintingartist2188" target="_blank">TikTok</a><a href="https://www.instagram.com/yelenas__art" target="_blank">Instagram</a><a href="https://youtube.com/@yelenakhait6520" target="_blank">YouTube</a></div>
+</div>
+
+<div class="page-hero">
+  <h1>Order a Custom <em>Painting</em></h1>
+  <p>Share your vision and Yelena will bring it to life — a one-of-a-kind piece crafted entirely by hand, just for you.</p>
+</div>
+
+<div class="how-it-works" id="steps">
+  <div class="step"><div class="step-num">01</div><h3>Share Your Idea</h3><p>Tell Yelena what you're looking for — a portrait, landscape, abstract, custom shoes, or anything else. Include reference photos if you have them.</p></div>
+  <div class="step"><div class="step-num">02</div><h3>Get a Quote</h3><p>Yelena will review your request and send you a quote based on size, medium, and complexity. No obligation — just a conversation.</p></div>
+  <div class="step"><div class="step-num">03</div><h3>Receive Your Art</h3><p>Yelena paints your piece by hand and ships it to you. You'll get progress photos along the way so you can watch it come to life.</p></div>
+</div>
+
+<div class="examples">
+  <div class="examples-title">Past Commissions</div>
+  <div class="examples-grid">
+    <img src="art-sunflowers.png" alt="Sunflower Field Commission">
+    <img src="art-sedona-horses.png" alt="Horses on a Creek">
+    <img src="art-cat-portrait.png" alt="Murzik">
+    <img src="art-rainy-window.png" alt="Rainy Day">
+  </div>
+</div>
+
+<div class="form-section" id="formSection">
+  <h2>Start your <em>commission</em></h2>
+  <p>Fill out the form below and Yelena will get back to you within 48 hours.</p>
+
+  <div id="commissionForm">
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input type="text" id="fname" placeholder="Your first name" required></div>
+      <div class="form-group"><label>Last Name</label><input type="text" id="lname" placeholder="Your last name" required></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="your@email.com" required></div>
+    <div class="form-group"><label>Phone (optional)</label><input type="tel" id="phone" placeholder="(555) 555-5555"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Type of Art</label>
+        <select id="artType">
+          <option value="">Select one...</option>
+          <option>Oil Painting</option>
+          <option>Acrylic Painting</option>
+          <option>Watercolor</option>
+          <option>Pencil / Graphite Drawing</option>
+          <option>Custom Painted Shoes</option>
+          <option>Abstract / Textured</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Approximate Size</label>
+        <select id="artSize">
+          <option value="">Select one...</option>
+          <option>Small (under 12")</option>
+          <option>Medium (12" - 24")</option>
+          <option>Large (24" - 36")</option>
+          <option>Extra Large (36"+)</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>Describe Your Vision</label><textarea id="vision" placeholder="Tell Yelena what you'd like — subject, colors, mood, anything that helps. If you have reference images, mention that here and she'll follow up."></textarea><div class="hint">The more detail, the better. Don't worry about being too specific — Yelena loves creative freedom too.</div></div>
+    <button class="form-submit" onclick="submitForm()">Send Commission Request</button>
+  </div>
+
+  <div class="form-success" id="formSuccess">
+    <h3>Request <em>sent!</em></h3>
+    <p>Thanks for reaching out. Yelena will review your commission request and get back to you within 48 hours. Keep an eye on your inbox.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">YELENA</div>
+  <div class="footer-socials"><a href="https://www.tiktok.com/@paintingartist2188" target="_blank">TikTok</a><a href="https://www.instagram.com/yelenas__art" target="_blank">Instagram</a><a href="https://youtube.com/@yelenakhait6520" target="_blank">YouTube</a></div>
+  <div class="footer-copy">© 2026 Yelena Khait</div>
+</footer>
+
+<script>
+const hamburger=document.getElementById("hamburger");const mobileMenu=document.getElementById("mobileMenu");
+hamburger.addEventListener("click",()=>{hamburger.classList.toggle("open");mobileMenu.classList.toggle("open");document.body.style.overflow=mobileMenu.classList.contains("open")?"hidden":""});
+
+gsap.registerPlugin(ScrollTrigger);
+document.querySelectorAll(".step").forEach((step,i)=>{
+  gsap.from(step,{y:40,opacity:0,delay:i*.15,scrollTrigger:{trigger:step,start:"top 90%",end:"top 50%",scrub:1}});
+});
+gsap.from("#formSection",{y:60,opacity:0,scrollTrigger:{trigger:"#formSection",start:"top 90%",end:"top 50%",scrub:1}});
+
+function submitForm(){
+  const fname=document.getElementById("fname").value;
+  const email=document.getElementById("email").value;
+  if(!fname||!email){alert("Please fill in your name and email.");return}
+
+  // Build mailto link with form data
+  const artType=document.getElementById("artType").value;
+  const artSize=document.getElementById("artSize").value;
+  const vision=document.getElementById("vision").value;
+  const lname=document.getElementById("lname").value;
+  const phone=document.getElementById("phone").value;
+
+  const subject=encodeURIComponent("Commission Request from "+fname+" "+lname);
+  const body=encodeURIComponent(
+    "Name: "+fname+" "+lname+"\n"+
+    "Email: "+email+"\n"+
+    "Phone: "+(phone||"N/A")+"\n"+
+    "Type: "+(artType||"Not specified")+"\n"+
+    "Size: "+(artSize||"Not specified")+"\n\n"+
+    "Vision:\n"+(vision||"No details provided")
+  );
+
+  window.location.href="mailto:yelenakhait@gmail.com?subject="+subject+"&body="+body;
+
+  document.getElementById("commissionForm").style.display="none";
+  document.getElementById("formSuccess").style.display="block";
+}
+</script>
+</body>
+</html>
