@@ -175,32 +175,53 @@ document.querySelectorAll(".step").forEach((step,i)=>{
 });
 gsap.from("#formSection",{y:60,opacity:0,scrollTrigger:{trigger:"#formSection",start:"top 90%",end:"top 50%",scrub:1}});
 
-function submitForm(){
+async function submitForm(){
   const fname=document.getElementById("fname").value;
   const email=document.getElementById("email").value;
   if(!fname||!email){alert("Please fill in your name and email.");return}
 
-  // Build mailto link with form data
+  const btn=document.querySelector(".form-submit");
+  btn.textContent="SENDING...";
+  btn.disabled=true;
+
   const artType=document.getElementById("artType").value;
   const artSize=document.getElementById("artSize").value;
   const vision=document.getElementById("vision").value;
   const lname=document.getElementById("lname").value;
   const phone=document.getElementById("phone").value;
 
-  const subject=encodeURIComponent("Commission Request from "+fname+" "+lname);
-  const body=encodeURIComponent(
-    "Name: "+fname+" "+lname+"\n"+
-    "Email: "+email+"\n"+
-    "Phone: "+(phone||"N/A")+"\n"+
-    "Type: "+(artType||"Not specified")+"\n"+
-    "Size: "+(artSize||"Not specified")+"\n\n"+
-    "Vision:\n"+(vision||"No details provided")
-  );
+  const data={
+    access_key:"58067749-92cd-412e-bebd-aa4118eaa3bc",
+    subject:"New Commission Request from "+fname+" "+lname,
+    from_name:"Yelena Portfolio",
+    name:fname+" "+lname,
+    email:email,
+    phone:phone||"N/A",
+    art_type:artType||"Not specified",
+    size:artSize||"Not specified",
+    vision:vision||"No details provided"
+  };
 
-  window.location.href="mailto:yelenakhait@gmail.com?subject="+subject+"&body="+body;
-
-  document.getElementById("commissionForm").style.display="none";
-  document.getElementById("formSuccess").style.display="block";
+  try{
+    const res=await fetch("https://api.web3forms.com/submit",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data)
+    });
+    const result=await res.json();
+    if(result.success){
+      document.getElementById("commissionForm").style.display="none";
+      document.getElementById("formSuccess").style.display="block";
+    }else{
+      alert("Something went wrong. Please try again.");
+      btn.textContent="SEND COMMISSION REQUEST";
+      btn.disabled=false;
+    }
+  }catch(err){
+    alert("Connection error. Please try again.");
+    btn.textContent="SEND COMMISSION REQUEST";
+    btn.disabled=false;
+  }
 }
 </script>
 </body>
