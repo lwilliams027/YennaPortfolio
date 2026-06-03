@@ -2,26 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Yelena — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
-  :root{--bg:#F0EFEB;--card:#E8E6E1;--white:#FAFAF8;--charcoal:#1A1A1A;--mid:#777;--light:#B8B8B8;--pale:#D6D4CF;--accent:#D4829A;--accent-dim:#C46B87;--accent-soft:rgba(212,130,154,0.12);--accent-glow:rgba(212,130,154,0.25);--display:'Playfair Display',Georgia,serif;--body:'Outfit',system-ui,sans-serif}
-  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}body{font-family:var(--body);background:var(--bg);color:var(--charcoal);min-height:100vh;min-height:-webkit-fill-available}
+  :root{--bg:#EEF3F8;--card:#E2EBF3;--white:#FAFCFE;--charcoal:#1E2A38;--mid:#6B7C8E;--light:#A8B7C6;--pale:#CBD8E6;--accent:#5E8FC9;--accent-dim:#4A78B0;--accent-soft:rgba(94,143,201,0.12);--accent-glow:rgba(94,143,201,0.28);--display:'Playfair Display',Georgia,serif;--body:'Outfit',system-ui,sans-serif;
+  /* soft cool hero palette */
+  --sky:#7FB2E0;--sky-deep:#5E8FC9;--blush:#E9B5C8;--hero-ink:#FFFFFF}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}html,body{overflow-x:hidden;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}body{font-family:var(--body);background:var(--bg);background-image:radial-gradient(140% 60% at 80% -10%,rgba(127,178,224,0.18) 0%,rgba(127,178,224,0) 55%),radial-gradient(120% 50% at 0% 5%,rgba(233,181,200,0.10) 0%,rgba(233,181,200,0) 50%);background-attachment:fixed;color:var(--charcoal);min-height:100vh;min-height:-webkit-fill-available}
 
   /* ═══ NAV ═══ */
-  nav{position:fixed;top:0;left:0;right:0;z-index:650;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(240,239,235,0.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,0.04)}
-  .nav-logo{font-family:var(--display);font-size:20px;font-weight:700;color:var(--charcoal);text-decoration:none;letter-spacing:2px}
-  .nav-links{display:flex;gap:28px;list-style:none}.nav-links a{font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .3s}.nav-links a:hover{color:var(--accent-dim)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:650;display:flex;justify-content:center;align-items:center;gap:36px;padding:22px 48px;background:transparent;transition:background .4s,backdrop-filter .4s,border-color .4s,padding .4s;border-bottom:1px solid transparent}
+  nav.scrolled{background:rgba(127,178,224,0.18);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,0.18);padding:14px 48px}
+  .nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+  .nav-links a{font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:1px;color:var(--hero-ink);text-decoration:none;transition:opacity .3s;opacity:.92;position:relative;padding-bottom:3px}
+  .nav-links a:hover{opacity:1}
+  .nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1.5px;background:var(--hero-ink)}
+  /* center pill logo badge */
+  .nav-logo{font-family:var(--display);font-size:17px;font-weight:700;color:var(--hero-ink);text-decoration:none;letter-spacing:3px;border:1.5px solid rgba(255,255,255,0.75);border-radius:40px;padding:7px 22px;line-height:1;transition:all .3s}
+  .nav-logo:hover{background:rgba(255,255,255,0.12)}
 
   /* Hamburger → X animation */
   .hamburger{display:none;cursor:pointer;padding:8px;z-index:700;width:40px;height:40px;position:relative}
-  .hamburger span{position:absolute;left:50%;width:22px;height:2px;background:var(--charcoal);transform:translateX(-50%);transition:all .35s cubic-bezier(.4,.01,.165,.99)}
+  .hamburger span{position:absolute;left:50%;width:22px;height:2px;background:var(--hero-ink);transform:translateX(-50%);transition:all .35s cubic-bezier(.4,.01,.165,.99)}
   .hamburger span:nth-child(1){top:12px}
   .hamburger span:nth-child(2){top:19px}
   .hamburger span:nth-child(3){top:26px}
+  .hamburger.open span{background:var(--charcoal)}
   .hamburger.open span:nth-child(1){top:19px;transform:translateX(-50%) rotate(45deg)}
   .hamburger.open span:nth-child(2){opacity:0;transform:translateX(-50%) scaleX(0)}
   .hamburger.open span:nth-child(3){top:19px;transform:translateX(-50%) rotate(-45deg)}
@@ -35,34 +44,55 @@
   .mobile-menu .social-row{display:flex;gap:28px;padding-top:24px;border-top:1px solid var(--pale);width:100%;justify-content:center}
   .mobile-menu .social-row a{font-family:var(--body);font-size:clamp(11px,3vw,14px);font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--mid);text-decoration:none}
 
-  /* ═══ HERO ═══ */
-  .hero-split-wrap{height:160vh;position:relative}.hero-split-pin{height:100vh;height:100dvh;width:100%;position:relative;overflow:hidden}
-  .curtain-left,.curtain-right{position:absolute;top:0;bottom:0;width:50%;background:var(--charcoal);z-index:10;pointer-events:none}.curtain-left{left:0}.curtain-right{right:0}
-  .curtain-left::after,.curtain-right::after{content:'';position:absolute;top:0;bottom:0;width:40px;background:linear-gradient(to right,transparent,rgba(0,0,0,0.15));pointer-events:none}
-  .curtain-left::after{right:-40px}.curtain-right::after{left:-40px;background:linear-gradient(to left,transparent,rgba(0,0,0,0.15))}
-  .curtain-text{position:absolute;top:50%;left:50%;z-index:20;transform:translate(-50%,-50%);text-align:center;white-space:nowrap;pointer-events:none}
-  .curtain-text h1{font-family:var(--display);font-size:clamp(48px,10vw,140px);font-weight:900;color:var(--bg);line-height:.9}
-  .curtain-text h1 em{font-weight:400;font-style:italic;color:var(--accent)}
-  .curtain-text .sub{font-family:var(--body);font-size:13px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-top:20px}
-  .hero-revealed{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:28px;padding:24px;opacity:0}
-  .hero-revealed h2{font-family:var(--display);font-size:clamp(32px,6vw,72px);font-weight:400;line-height:1.1}.hero-revealed h2 em{font-style:italic;color:var(--accent-dim)}
-  .hero-revealed p{font-family:var(--body);font-size:16px;font-weight:200;color:var(--mid);max-width:440px;line-height:1.7}
-  .hero-revealed .cta{font-family:var(--body);font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;padding:16px 40px;border:1px solid var(--pale);transition:all .4s}
-  .hero-revealed .cta:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-dim)}
+  /* ═══ HERO (full-bleed image) ═══ */
+  .hero{position:relative;width:100%;height:100vh;height:100svh;min-height:600px;overflow:hidden}
+  .hero-pic{position:absolute;inset:0;z-index:1}
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;z-index:1}
+  /* scrim: lift legibility of white type over the busy center, plus a soft top vignette for the nav */
+  .hero-scrim{position:absolute;inset:0;z-index:2;background:
+     linear-gradient(180deg,rgba(40,55,80,0.40) 0%,rgba(40,55,80,0.05) 24%),
+     radial-gradient(105% 60% at 50% 48%,rgba(35,45,70,0.48) 0%,rgba(35,45,70,0) 60%),
+     linear-gradient(0deg,rgba(30,40,65,0.32) 0%,rgba(30,40,65,0) 30%)}
+  .hero-content{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+  .hero-content h1{font-family:var(--display);font-weight:400;font-size:clamp(64px,13vw,184px);line-height:.95;color:var(--hero-ink);letter-spacing:-1px;text-shadow:0 2px 40px rgba(40,72,120,0.35);transform:translateY(8%)}
+  .hero-content .sub{font-family:var(--body);font-weight:300;font-size:clamp(18px,2.4vw,30px);letter-spacing:6px;color:var(--hero-ink);opacity:.95;margin-top:18px;transform:translateY(8%);text-shadow:0 2px 24px rgba(40,72,120,0.3)}
+  /* entrance */
+  .hero-content h1,.hero-content .sub{opacity:0;animation:heroRise 1.3s cubic-bezier(.16,1,.3,1) forwards}
+  .hero-content h1{animation-delay:.25s}
+  .hero-content .sub{animation-delay:.55s}
+  @keyframes heroRise{to{opacity:1;transform:translateY(0)}}
+  .hero-content .sub{opacity:0}
+  @media(prefers-reduced-motion:reduce){.hero-content h1,.hero-content .sub{animation:none;opacity:1;transform:none}.hero-content .sub{opacity:.95}}
 
   /* ═══ GALLERY ═══ */
-  .gallery-section{padding:120px 48px}
-  .gallery-title{font-family:var(--display);font-size:48px;font-weight:400;margin-bottom:16px}.gallery-title em{font-style:italic;color:var(--accent-dim)}
-  .gallery-sub{font-family:var(--body);font-size:14px;color:var(--mid);margin-bottom:64px}
-  .flip-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
-  .flip-card{perspective:1200px;cursor:pointer}
-  .flip-inner{position:relative;width:100%;aspect-ratio:3/4;transform-style:preserve-3d;will-change:transform}
-  .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden}
-  .flip-front{overflow:hidden}.flip-front img{width:100%;height:100%;object-fit:cover;display:block}
-  .flip-back{background:var(--charcoal);color:var(--bg);transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:24px;text-align:center}
-  .flip-back h4{font-family:var(--display);font-size:20px;font-weight:400}.flip-back span{font-family:var(--body);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}
-  .flip-back .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px}
-  .flip-back p{font-family:var(--body);font-size:11px;font-weight:200;color:rgba(240,239,235,0.5);line-height:1.5;margin-top:6px}
+  .gallery-section{padding:140px 48px}
+  .gallery-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:72px;flex-wrap:wrap}
+  .gallery-eyebrow{font-family:var(--body);font-size:11px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:var(--accent-dim);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .gallery-eyebrow::before{content:'';width:32px;height:1px;background:var(--accent)}
+  .gallery-title{font-family:var(--display);font-size:clamp(40px,5.5vw,68px);font-weight:400;line-height:1.02;letter-spacing:-1px}.gallery-title em{font-style:italic;color:var(--accent-dim)}
+  .gallery-sub{font-family:var(--body);font-size:14px;font-weight:300;color:var(--mid);max-width:300px;text-align:right}
+  /* curated mosaic: 4 cols, pieces sized to their real shape */
+  .flip-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:300px;gap:22px}
+  .flip-card{perspective:1400px;cursor:pointer;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+  .flip-card:hover{transform:translateY(-8px)}
+  /* spans — landscapes go wide, portraits go tall, squares stay 1×1 */
+  .flip-card.tall{grid-row:span 2}
+  .flip-card.wide{grid-column:span 2}
+  /* responsive gallery visibility (hero pieces appear only on the screen where they aren't the hero) */
+  .flip-card.only-mobile{display:none}
+  .flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;will-change:transform}
+  .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;overflow:hidden}
+  .flip-front{box-shadow:0 8px 28px rgba(30,42,56,0.13);transition:box-shadow .55s}
+  .flip-front::after{content:'';position:absolute;inset:0;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.10);pointer-events:none}
+  .flip-card:hover .flip-front{box-shadow:0 22px 54px rgba(30,42,56,0.24)}
+  .flip-front img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.16,1,.3,1)}
+  .flip-card:hover .flip-front img{transform:scale(1.04)}
+  /* refined back face */
+  .flip-back{background:linear-gradient(155deg,#223247 0%,#15212F 100%);color:var(--white);transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:28px;text-align:center;box-shadow:0 10px 30px rgba(30,42,56,0.18)}
+  .flip-back .medium{font-family:var(--body);font-size:9px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--sky);padding:5px 12px;border:1px solid rgba(127,178,224,0.35);border-radius:30px}
+  .flip-back h4{font-family:var(--display);font-size:23px;font-weight:400;line-height:1.1}
+  .flip-back .rule{width:24px;height:1px;background:var(--blush);opacity:.8}
+  .flip-back p{font-family:var(--body);font-size:11.5px;font-weight:200;color:rgba(238,243,248,0.62);line-height:1.6;max-width:240px}
 
   /* ═══ TIKTOK ═══ */
   .tiktok-wrap{overflow:hidden}
@@ -70,25 +100,57 @@
   .tiktok-title{font-family:var(--display);font-size:48px;font-weight:400;margin-bottom:8px}.tiktok-title em{font-style:italic;color:var(--accent-dim)}
   .tiktok-sub{font-family:var(--body);font-size:14px;color:var(--mid);margin-bottom:56px}
   .tiktok-track{display:flex;gap:32px;width:max-content}
-  .tiktok-card{flex:0 0 280px;border-radius:16px;overflow:hidden;background:var(--charcoal);position:relative;box-shadow:0 12px 40px rgba(0,0,0,0.1)}
+  .tiktok-card{flex:0 0 280px;border-radius:16px;overflow:hidden;background:linear-gradient(155deg,var(--charcoal),#2B3D52);position:relative;box-shadow:0 14px 44px rgba(30,42,56,0.16)}
   .tiktok-card video{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:9/16;border-radius:16px}
   .tiktok-overlay{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,0.7));border-radius:0 0 16px 16px;opacity:0;transition:opacity .3s}
   .tiktok-card:hover .tiktok-overlay{opacity:1}
   .tiktok-overlay span{font-family:var(--body);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
-  .tiktok-follow{display:inline-flex;align-items:center;gap:10px;margin-top:48px;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;padding:14px 36px;border:1px solid var(--pale);transition:all .4s}
+  .tiktok-follow{display:inline-flex;align-items:center;gap:10px;margin-top:48px;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;padding:14px 36px;border:1px solid var(--pale);border-radius:40px;transition:all .4s}
   .tiktok-follow:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-dim)}
 
+  /* ═══ CUSTOM SHOES ═══ */
+  .shoes-feature{padding:120px 48px;text-align:center;border-top:1px solid var(--pale);position:relative;overflow:hidden}
+  .shoes-feature::before{content:'';position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:680px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(233,181,200,0.14) 0%,rgba(233,181,200,0) 70%);pointer-events:none}
+  .shoes-eyebrow{position:relative;font-family:var(--body);font-size:11px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--accent-dim);margin-bottom:22px;display:inline-flex;align-items:center;gap:14px}
+  .shoes-eyebrow::before,.shoes-eyebrow::after{content:'';width:34px;height:1px;background:var(--accent)}
+  .shoes-title{position:relative;font-family:var(--display);font-size:clamp(40px,5.5vw,68px);font-weight:400;line-height:1.04;letter-spacing:-1px;margin-bottom:20px}
+  .shoes-title em{font-style:italic;color:var(--accent-dim)}
+  .shoes-sub{position:relative;font-family:var(--body);font-size:15px;font-weight:300;color:var(--mid);max-width:560px;margin:0 auto 64px;line-height:1.75}
+  .shoes-row{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;max-width:1560px;margin:0 auto}
+  .shoe-feature-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:linear-gradient(165deg,var(--white),var(--card));border:1px solid var(--pale);border-radius:18px;overflow:hidden;box-shadow:0 12px 34px rgba(30,42,56,0.10);transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s,border-color .45s}
+  .shoe-feature-card:hover{transform:translateY(-8px);box-shadow:0 26px 56px rgba(30,42,56,0.20);border-color:var(--sky)}
+  .shoe-feature-card .sf-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--card)}
+  .shoe-feature-card .sf-img::after{content:'';position:absolute;inset:0;box-shadow:inset 0 -40px 60px -30px rgba(30,42,56,0.10);pointer-events:none}
+  .shoe-feature-card .sf-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+  .shoe-feature-card:hover .sf-img img{transform:scale(1.06)}
+  .sf-info{padding:20px 22px 22px;text-align:left;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--pale)}
+  .sf-info h3{font-family:var(--display);font-size:21px;font-weight:400;line-height:1.15;transition:color .3s}
+  .shoe-feature-card:hover .sf-info h3{color:var(--accent-dim)}
+  .sf-medium{font-family:var(--body);font-size:10px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid)}
+  .shoes-btn{position:relative;display:inline-flex;align-items:center;gap:10px;margin-top:90px;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;padding:16px 40px;border:1px solid var(--pale);border-radius:40px;transition:all .4s}
+  .shoes-btn .arr{transition:transform .4s}
+  .shoes-btn:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-dim)}
+  .shoes-btn:hover .arr{transform:translateX(5px)}
+
   /* ═══ ABOUT ═══ */
-  .about-band{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-top:1px solid var(--pale);border-bottom:1px solid var(--pale)}
-  .about-img-side{background:var(--card);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px}
-  .about-img-side img{width:100%;max-width:400px;object-fit:contain;display:block;position:relative;z-index:2;box-shadow:0 16px 60px rgba(0,0,0,0.1)}
-  .about-img-frame{position:absolute;top:50%;left:50%;transform:translate(calc(-50% + 16px),calc(-50% + 16px));width:380px;height:520px;border:1px solid var(--accent-glow);z-index:1}
-  .about-txt-side{display:flex;flex-direction:column;justify-content:center;padding:80px}
-  .about-txt-side .tag{font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--accent-dim);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+  .about-band{display:grid;grid-template-columns:1.05fr 1fr;min-height:90vh;border-top:1px solid var(--pale);border-bottom:1px solid var(--pale)}
+  .about-img-side{position:relative;overflow:hidden;background:var(--card)}
+  .about-img-side img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block}
+  .about-img-side .img-grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,42,56,0) 55%,rgba(30,42,56,0.55) 100%);z-index:1}
+  .about-img-side .img-cap{position:absolute;left:32px;bottom:30px;z-index:2;display:flex;align-items:center;gap:12px;font-family:var(--body);font-size:11px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#fff}
+  .about-img-side .img-cap::before{content:'';width:28px;height:1px;background:rgba(255,255,255,0.8)}
+  .about-txt-side{display:flex;flex-direction:column;justify-content:center;padding:96px 88px;position:relative}
+  .about-txt-side .tag{font-family:var(--body);font-size:11px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:var(--accent-dim);margin-bottom:26px;display:flex;align-items:center;gap:12px}
   .about-txt-side .tag::before{content:'';width:32px;height:1px;background:var(--accent)}
-  .about-txt-side h2{font-family:var(--display);font-size:48px;font-weight:400;line-height:1.12;margin-bottom:28px}.about-txt-side h2 em{font-style:italic;color:var(--accent-dim)}
-  .about-txt-side p{font-family:var(--body);font-size:15px;font-weight:300;line-height:1.85;color:var(--mid);max-width:420px;margin-bottom:16px}
-  .about-txt-side .read-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-family:var(--body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;transition:color .3s}.about-txt-side .read-link:hover{color:var(--accent-dim)}
+  .about-txt-side h2{font-family:var(--display);font-size:clamp(40px,4.6vw,60px);font-weight:400;line-height:1.08;margin-bottom:30px;letter-spacing:-.5px}.about-txt-side h2 em{font-style:italic;color:var(--accent-dim)}
+  .about-txt-side p{font-family:var(--body);font-size:15px;font-weight:300;line-height:1.9;color:var(--mid);max-width:440px;margin-bottom:18px}
+  .about-stats{display:flex;gap:0;margin:38px 0 4px;border-top:1px solid var(--pale);border-bottom:1px solid var(--pale)}
+  .about-stats .stat{flex:1;display:flex;flex-direction:column;gap:6px;padding:22px 0;position:relative}
+  .about-stats .stat+.stat{border-left:1px solid var(--pale);padding-left:24px}
+  .about-stats .stat b{font-family:var(--display);font-size:34px;font-weight:400;color:var(--charcoal);line-height:1}
+  .about-stats .stat b em{font-style:italic;color:var(--accent-dim)}
+  .about-stats .stat small{font-family:var(--body);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid)}
+  .about-txt-side .read-link{display:inline-flex;align-items:center;gap:8px;margin-top:30px;font-family:var(--body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;transition:gap .3s,color .3s}.about-txt-side .read-link:hover{color:var(--accent-dim);gap:14px}
 
   /* ═══ MARQUEE ═══ */
   .marquee{padding:52px 0;overflow:hidden;border-top:1px solid var(--pale);border-bottom:1px solid var(--pale)}
@@ -97,53 +159,128 @@
   .m-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
 
   /* ═══ CTA ═══ */
-  .cta-section{padding:200px 48px;text-align:center;position:relative;overflow:hidden}
-  .cta-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:55vw;height:55vw;max-width:650px;max-height:650px;border-radius:50%;border:1px solid var(--accent-glow);will-change:transform}
-  .cta-inner{position:relative;z-index:2}.cta-inner h2{font-family:var(--display);font-size:clamp(44px,7vw,90px);font-weight:900;line-height:1.05;margin-bottom:24px}.cta-inner h2 em{font-weight:400;font-style:italic;color:var(--accent-dim)}
-  .cta-inner p{font-family:var(--body);font-size:15px;font-weight:300;color:var(--mid);max-width:460px;margin:0 auto 40px;line-height:1.7}
-  .cta-btn{display:inline-block;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--accent-dim);text-decoration:none;padding:18px 48px;transition:all .4s;box-shadow:0 4px 24px var(--accent-glow)}.cta-btn:hover{background:var(--charcoal);box-shadow:0 4px 24px rgba(0,0,0,0.15)}
+  .cta-section{position:relative;overflow:hidden;padding:180px 48px;text-align:center;display:flex;align-items:center;justify-content:center;min-height:88vh}
+  .cta-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+  .cta-bg picture{display:block;position:absolute;inset:0}
+  .cta-bg img{width:100%;height:118%;object-fit:cover;object-position:50% 50%;position:absolute;top:-9%;left:0}
+  /* painterly scrim: deepen edges + center for white type, warm-to-dark wash */
+  .cta-scrim{position:absolute;inset:0;z-index:1;background:
+     radial-gradient(120% 90% at 50% 45%,rgba(20,18,28,0.30) 0%,rgba(20,18,28,0.55) 70%,rgba(20,18,28,0.72) 100%),
+     linear-gradient(180deg,rgba(20,18,28,0.45) 0%,rgba(20,18,28,0.10) 30%,rgba(20,18,28,0.10) 65%,rgba(20,18,28,0.55) 100%)}
+  /* thin gallery frame inset */
+  .cta-frame{position:absolute;inset:28px;z-index:2;border:1px solid rgba(255,255,255,0.22);pointer-events:none}
+  .cta-inner{position:relative;z-index:3;max-width:760px}
+  .cta-eyebrow{font-family:var(--body);font-size:11px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:26px;display:inline-flex;align-items:center;gap:14px}
+  .cta-eyebrow::before,.cta-eyebrow::after{content:'';width:34px;height:1px;background:rgba(255,255,255,0.6)}
+  .cta-inner h2{font-family:var(--display);font-size:clamp(46px,7.5vw,98px);font-weight:900;line-height:1.02;margin-bottom:26px;color:#fff;text-shadow:0 2px 40px rgba(0,0,0,0.4)}
+  .cta-inner h2 em{font-weight:400;font-style:italic;color:#F0C9A8}
+  .cta-inner p{font-family:var(--body);font-size:16px;font-weight:300;color:rgba(255,255,255,0.88);max-width:480px;margin:0 auto 42px;line-height:1.75;text-shadow:0 1px 20px rgba(0,0,0,0.35)}
+  .cta-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);background:#fff;text-decoration:none;padding:18px 46px;border-radius:40px;transition:all .4s;box-shadow:0 14px 40px rgba(0,0,0,0.3)}
+  .cta-btn .arr{transition:transform .4s}
+  .cta-btn:hover{background:#F0C9A8;transform:translateY(-2px);box-shadow:0 18px 48px rgba(0,0,0,0.4)}
+  .cta-btn:hover .arr{transform:translateX(5px)}
+  .cta-note{margin-top:24px;font-family:var(--body);font-size:11px;font-weight:300;letter-spacing:1px;color:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;gap:8px}
+  .cta-note::before{content:'';width:5px;height:5px;border-radius:50%;background:#F0C9A8}
 
   /* ═══ FOOTER ═══ */
-  footer{padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--pale)}
-  .footer-logo{font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:2px}
-  .footer-socials{display:flex;gap:20px}.footer-socials a{font-family:var(--body);font-size:11px;color:var(--mid);text-decoration:none;transition:color .3s}.footer-socials a:hover{color:var(--accent-dim)}
-  .footer-copy{font-family:var(--body);font-size:10px;color:var(--light)}
+  footer{position:relative;padding:110px 64px 40px;border-top:1px solid var(--pale);background:linear-gradient(180deg,rgba(127,178,224,0.10),rgba(127,178,224,0) 55%);overflow:hidden}
+  /* soft glow accents echoing the hero palette */
+  footer::before{content:'';position:absolute;top:-160px;right:-120px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,var(--accent-glow) 0%,rgba(94,143,201,0) 70%);pointer-events:none}
+  footer::after{content:'';position:absolute;bottom:-200px;left:-140px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(233,181,200,0.18) 0%,rgba(233,181,200,0) 70%);pointer-events:none}
+  .footer-inner{position:relative;z-index:1;width:100%}
+  .footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:64px;flex-wrap:wrap;padding-bottom:64px;border-bottom:1px solid var(--pale)}
+  .footer-brand{max-width:460px}
+  /* commission call-to-action */
+  .footer-feature{display:flex;flex-direction:column;align-items:flex-start;max-width:480px}
+  .footer-cta-title{font-family:var(--display);font-weight:400;font-size:clamp(26px,2.4vw,38px);line-height:1.12;letter-spacing:-.5px;color:var(--charcoal);margin-bottom:26px}
+  .footer-cta-title em{font-style:italic;color:var(--accent-dim)}
+  .footer-thumbs{display:flex;gap:12px;flex-wrap:wrap}
+  .footer-thumbs a{display:block;width:96px;height:114px;border-radius:14px;overflow:hidden;border:1px solid var(--pale);box-shadow:0 8px 24px rgba(40,72,120,0.08);transition:transform .4s,box-shadow .4s}
+  .footer-thumbs a:hover{transform:translateY(-5px);box-shadow:0 16px 38px var(--accent-glow)}
+  .footer-thumbs img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+  .footer-thumbs a:hover img{transform:scale(1.08)}
+  .footer-cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;font-family:var(--body);font-size:13px;font-weight:400;letter-spacing:1px;text-transform:uppercase;color:var(--white);background:var(--accent);padding:15px 32px;border-radius:40px;text-decoration:none;transition:all .35s}
+  .footer-cta:hover{background:var(--accent-dim);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
+  .footer-cta .arr{transition:transform .35s}
+  .footer-cta:hover .arr{transform:translateX(5px)}
+  .footer-cta-note{margin-top:16px;font-family:var(--body);font-size:12px;font-weight:300;color:var(--mid);letter-spacing:.5px}
+  .footer-logo{font-family:var(--display);font-size:clamp(44px,6vw,76px);font-weight:400;letter-spacing:-1px;line-height:.95}
+  .footer-logo em{font-style:italic;color:var(--accent-dim)}
+  .footer-tag{font-family:var(--body);font-size:14px;font-weight:300;color:var(--mid);margin-top:18px;line-height:1.7;max-width:400px}
+  .footer-contact-row{display:flex;align-items:center;gap:14px;margin-top:22px;font-family:var(--body);font-size:14px;font-weight:300;color:var(--mid);flex-wrap:wrap}
+  .footer-contact-row a{color:var(--charcoal);text-decoration:none;transition:color .3s}
+  .footer-contact-row a:hover{color:var(--accent-dim)}
+  .footer-dot{width:4px;height:4px;border-radius:50%;background:var(--pale)}
+  .footer-social-label{font-family:var(--body);font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--accent-dim);margin-top:34px;display:flex;align-items:center;gap:10px}
+  .footer-social-label::before{content:'';width:22px;height:1px;background:var(--accent)}
+  /* column headings — eyebrow style, consistent with sections */
+  .footer-head{font-family:var(--body);font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--accent-dim);margin-bottom:22px;display:flex;align-items:center;gap:10px}
+  .footer-head::before{content:'';width:22px;height:1px;background:var(--accent)}
+  /* social icon pills */
+  .footer-socials{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+  .footer-socials a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--pale);border-radius:50%;color:var(--mid);transition:all .35s;background:rgba(250,252,254,0.5)}
+  .footer-socials a:hover{border-color:var(--accent);background:var(--accent);color:var(--white);transform:translateY(-3px);box-shadow:0 10px 24px var(--accent-glow)}
+  .footer-socials svg{width:19px;height:19px;fill:currentColor}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:28px;flex-wrap:wrap}
+  .footer-copy{font-family:var(--body);font-size:11px;line-height:1;color:var(--light);letter-spacing:.5px}
+  .footer-made{flex:1 1 auto;text-align:center;font-family:var(--body);font-size:11px;line-height:1;color:var(--light);letter-spacing:.5px}
+  .footer-made em{font-style:italic;color:var(--accent-dim)}
+  .footer-top-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:pointer;text-decoration:none;transition:color .3s}
+  .footer-top-btn:hover{color:var(--accent-dim)}
+  .footer-top-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6;transition:transform .3s}
+  .footer-top-btn:hover svg{transform:translateY(-3px)}
 
   /* ═══════════════════════════════════════
      MOBILE — TABLET (max 1024px)
   ═══════════════════════════════════════ */
   @media(max-width:1024px){
-    .flip-grid{grid-template-columns:repeat(3,1fr);gap:20px}
+    .flip-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:280px;gap:20px}
     .gallery-section{padding:100px 32px}
     .tiktok-grid{grid-template-columns:repeat(2,1fr)}
     .about-txt-side{padding:60px}
     .about-txt-side h2{font-size:40px}
+    .shoes-feature{padding:100px 32px}
+    .shoes-row{grid-template-columns:repeat(2,1fr);gap:24px;max-width:680px}
+    footer{padding:80px 32px 32px}
+    .footer-top{gap:48px}
   }
 
   /* ═══════════════════════════════════════
      MOBILE — PHONE (max 768px)
   ═══════════════════════════════════════ */
   @media(max-width:768px){
-    nav{padding:14px 20px}
-    .nav-logo{font-size:18px}
+    nav{padding:max(14px,env(safe-area-inset-top)) 20px;justify-content:space-between;gap:0}
+    nav.scrolled{padding:max(12px,env(safe-area-inset-top)) 20px}
+    .nav-logo{font-size:15px;padding:6px 18px}
     .nav-links{display:none}
     .hamburger{display:block}
 
     /* Hero */
-    .curtain-text h1{font-size:clamp(40px,14vw,80px)}
-    .curtain-text .sub{font-size:11px;letter-spacing:3px}
-    .hero-revealed h2{font-size:clamp(28px,8vw,48px)}
-    .hero-revealed p{font-size:14px;padding:0 8px}
-    .hero-revealed .cta{padding:14px 32px;font-size:11px}
+    .hero-content h1{font-size:clamp(48px,15vw,90px)}
+    .hero-content .sub{font-size:clamp(13px,3.4vw,18px);letter-spacing:4px;margin-top:12px}
+    .hero-img{object-position:50% 35%}
 
     /* Gallery — 2 columns, tap to flip */
     .gallery-section{padding:80px 16px}
+    .gallery-head{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:40px}
     .gallery-title{font-size:36px;padding:0 4px}
-    .gallery-sub{font-size:13px;margin-bottom:40px;padding:0 4px}
-    .flip-grid{grid-template-columns:1fr 1fr;gap:12px}
+    .gallery-sub{font-size:13px;padding:0 4px;text-align:left;max-width:none}
+    .flip-card.only-mobile{display:block}
+    .flip-card.only-desktop{display:none}
+    .flip-card:hover{transform:none}
+    .flip-card:hover .flip-front img{transform:none}
+    /* uniform 2-col grid — drop tall spans so there are no gaps; keep wide landscapes full-width */
+    .flip-grid{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:12px}
+    .flip-card{aspect-ratio:3/4}
+    .flip-card.wide{grid-column:span 2;aspect-ratio:3/2;order:2}
+    .flip-card.fill-mobile{grid-column:span 2;aspect-ratio:16/10;order:1}
+    .flip-card.fill-mobile .flip-front img{object-position:50% 30%}
+    .flip-card.tall{grid-row:auto}
+    .flip-inner{height:100%}
     .flip-back{padding:16px}
-    .flip-back h4{font-size:16px}
-    .flip-back p{font-size:10px}
+    .flip-back .medium{font-size:8px;padding:4px 10px}
+    .flip-back h4{font-size:17px}
+    .flip-back p{font-size:10px;max-width:none}
 
     /* TikTok — auto-scroll on mobile too */
     .tiktok-section{padding:60px 0;border:none;min-height:auto}
@@ -157,12 +294,16 @@
 
     /* About — stacked */
     .about-band{grid-template-columns:1fr;min-height:auto}
-    .about-img-side{padding:48px 24px;min-height:50vh}
-    .about-img-side img{max-width:280px}
-    .about-img-frame{width:280px;height:380px}
-    .about-txt-side{padding:48px 24px}
+    .about-img-side{min-height:0;aspect-ratio:4/3}
+    .about-img-side img{object-position:50% 18%}
+    .about-img-side .img-cap{left:24px;bottom:24px;font-size:10px}
+    .about-txt-side{padding:56px 24px}
     .about-txt-side h2{font-size:32px}
     .about-txt-side p{font-size:14px}
+    .about-stats{margin:28px 0 4px}
+    .about-stats .stat{padding:18px 0}
+    .about-stats .stat+.stat{padding-left:16px}
+    .about-stats .stat b{font-size:26px}
 
     /* Marquee */
     .marquee{padding:36px 0}
@@ -170,22 +311,31 @@
     .marquee-track{gap:32px}
 
     /* CTA */
-    .cta-section{padding:100px 24px}
-    .cta-inner h2{font-size:clamp(32px,10vw,56px)}
+    .cta-section{padding:110px 24px;min-height:80vh}
+    .cta-frame{inset:16px}
+    .cta-inner h2{font-size:clamp(34px,11vw,60px)}
     .cta-inner p{font-size:14px}
     .cta-btn{padding:16px 36px;font-size:12px}
-    .cta-ring{width:80vw;height:80vw}
+
+    /* Custom shoes — mobile */
+    .shoes-feature{padding:80px 20px}
+    .shoes-row{gap:14px}
+    .shoe-feature-card h3{font-size:18px}
+    .shoes-sub{margin-bottom:48px}
 
     /* Footer — mobile */
-    footer{flex-direction:column;gap:16px;padding:24px 20px;text-align:center}
+    footer{padding:64px 20px 28px}
+    .footer-top{gap:40px;padding-bottom:40px}
+    .footer-thumbs a{width:84px;height:100px}
+    .footer-bottom{flex-direction:column;align-items:flex-start;gap:14px}
   }
 
   /* ═══════════════════════════════════════
      MOBILE — SMALL PHONE (max 420px)
   ═══════════════════════════════════════ */
   @media(max-width:420px){
-    .curtain-text h1{font-size:clamp(36px,15vw,64px)}
-    .hero-revealed h2{font-size:clamp(24px,8vw,36px)}
+    .hero-content h1{font-size:clamp(42px,16vw,68px)}
+    .hero-content .sub{font-size:12px;letter-spacing:3px}
     .gallery-title{font-size:28px}
     .flip-grid{gap:8px}
     .flip-back{padding:12px}
@@ -201,19 +351,27 @@
 <body>
 
 <!-- NAV -->
-<nav>
-  <a href="index.html" class="nav-logo">YELENA</a>
-  <ul class="nav-links"><li><a href="index.html#gallery">Gallery</a></li><li><a href="shoes.html">Shoes</a></li><li><a href="abstract.html">Abstract</a></li><li><a href="commission.html">Commission</a></li></ul>
+<nav id="siteNav">
+  <ul class="nav-links">
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="/#gallery">Gallery</a></li>
+    <li><a href="/shoes/">Shoes</a></li>
+  </ul>
+  <a href="/" class="nav-logo">YELENA</a>
+  <ul class="nav-links">
+    <li><a href="/abstract/">Abstract</a></li>
+    <li><a href="/commission/">Commission</a></li>
+  </ul>
   <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="menu-links">
-    <a href="index.html#gallery" onclick="closeMenu()">Gallery</a>
-    <a href="shoes.html" onclick="closeMenu()">Shoes</a>
-    <a href="abstract.html" onclick="closeMenu()">Abstract</a>
-    <a href="commission.html" onclick="closeMenu()"><em>Commission</em></a>
+    <a href="/#gallery" onclick="closeMenu()">Gallery</a>
+    <a href="/shoes/" onclick="closeMenu()">Shoes</a>
+    <a href="/abstract/" onclick="closeMenu()">Abstract</a>
+    <a href="/commission/" onclick="closeMenu()"><em>Commission</em></a>
   </div>
   <div class="social-row">
     <a href="https://www.tiktok.com/@paintingartist2188" target="_blank">TikTok</a>
@@ -223,27 +381,38 @@
 </div>
 
 <!-- HERO -->
-<div class="hero-split-wrap"><div class="hero-split-pin" id="heroPin">
-  <div class="hero-revealed"><h2>Art made by the hands of <em>Yelena Khait</em></h2><p>Original paintings, portraits, custom shoes, drawings, anything you like.</p><a href="#gallery" class="cta">Original ArtWorks →</a></div>
-  <div class="curtain-left" id="curtainL"></div><div class="curtain-right" id="curtainR"></div>
-  <div class="curtain-text" id="curtainText"><h1>Yelena<br><em>Khait</em></h1><div class="sub">Original Paintings</div></div>
-</div></div>
+<header class="hero">
+  <picture class="hero-pic">
+    <source media="(max-width:768px)" srcset="/assets/images/art/art-rainy-window-hero.png">
+    <img class="hero-img" src="/assets/images/art/art-sedona-horses-hero.png" alt="Painting by Yelena Khait">
+  </picture>
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <h1>Art by Yelena</h1>
+    <div class="sub">PAINTER &amp; ARTIST</div>
+  </div>
+</header>
 
 <!-- GALLERY -->
 <section class="gallery-section" id="gallery">
-  <h2 class="gallery-title" id="galTitle">Selected <em>Works</em></h2>
-  <p class="gallery-sub" id="galSub">Tap to reveal details</p>
+  <div class="gallery-head">
+    <div>
+      <div class="gallery-eyebrow">The Collection</div>
+      <h2 class="gallery-title" id="galTitle">Selected <em>Works</em></h2>
+    </div>
+    <p class="gallery-sub" id="galSub">A range of originals across oil, acrylic, watercolor and graphite. Tap any piece to reveal its story.</p>
+  </div>
   <div class="flip-grid">
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-red-portrait.png" alt="Breath"></div><div class="flip-back"><h4>Breath</h4><span>Oil on Canvas</span><div class="dot"></div><p>An oil painting capturing a young woman taking in a breath in the middle of a chaotic world.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-rainy-window.png" alt="Rainy Day"></div><div class="flip-back"><h4>Rainy Day</h4><span>Oil on Canvas</span><div class="dot"></div><p>An oil painting capturing the gentle raindrops on a window with rich colors evoking a sense of calm.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-sunflowers.png" alt="Sunflower Field"></div><div class="flip-back"><h4>Sunflower Field</h4><span>Acrylic on Canvas · Commission</span><div class="dot"></div><p>An acrylic painting commission that captures a sunflower field — look close enough and you'll find aliens and an alien ship.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-sedona-horses.png" alt="Horses on a Creek"></div><div class="flip-back"><h4>Horses on a Creek</h4><span>Acrylic on Canvas</span><div class="dot"></div><p>An acrylic painting of Oak Creek Canyon that captures the beautiful landscape.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-deer-circle.png" alt="Ethereal"></div><div class="flip-back"><h4>Ethereal</h4><span>Textured Acrylic on Round Canvas</span><div class="dot"></div><p>Textured acrylic painting with hints of gold on a round canvas.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-fruit-still-life.png" alt="Fruit Harvest"></div><div class="flip-back"><h4>Fruit Harvest</h4><span>Oil on Canvas</span><div class="dot"></div><p>Still life oil painting of fruits in a beautiful bowl.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-quarantine-still-life.png" alt="Pandemic"></div><div class="flip-back"><h4>Pandemic</h4><span>Oil on Canvas</span><div class="dot"></div><p>Still life oil painting capturing the tragic time in our lives.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-cat-portrait.png" alt="Murzik"></div><div class="flip-back"><h4>Murzik</h4><span>Pencil on Paper</span><div class="dot"></div><p>A pencil portrait drawn in memory of my senior cat passing away.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-city-crowd.png" alt="Man Against Red"></div><div class="flip-back"><h4>Man Against Red</h4><span>Watercolor on Paper</span><div class="dot"></div><p>A watercolor portrait of a masculine figure with a bold, emotive red background.</p></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="assets/images/art/art-blue-portrait.png" alt="Cerulean"></div><div class="flip-back"><h4>Cerulean</h4><span>Watercolor on Paper</span><div class="dot"></div><p>Watercolor on paper, capturing the beauty of the woman.</p></div></div></div>
+    <div class="flip-card tall"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-red-portrait.png" alt="Breath"></div><div class="flip-back"><span class="medium">Oil on Canvas</span><h4>Breath</h4><div class="rule"></div><p>A young woman taking in a breath in the middle of a chaotic world.</p></div></div></div>
+    <div class="flip-card wide"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-sunflowers-crop.png" alt="Sunflower Field"></div><div class="flip-back"><span class="medium">Acrylic · Commission</span><h4>Sunflower Field</h4><div class="rule"></div><p>A commissioned sunflower field — look closely and you'll find aliens and an alien ship.</p></div></div></div>
+    <div class="flip-card tall only-desktop"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-rainy-window-crop.png" alt="Rainy Day"></div><div class="flip-back"><span class="medium">Oil on Canvas</span><h4>Rainy Day</h4><div class="rule"></div><p>Gentle raindrops on a window, rich colors evoking a sense of calm.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-deer-circle.png" alt="Ethereal"></div><div class="flip-back"><span class="medium">Textured Acrylic · Round</span><h4>Ethereal</h4><div class="rule"></div><p>Textured acrylic with hints of gold on a round canvas.</p></div></div></div>
+    <div class="flip-card"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-fruit-still-life-crop.png" alt="Fruit Harvest"></div><div class="flip-back"><span class="medium">Oil on Canvas</span><h4>Fruit Harvest</h4><div class="rule"></div><p>A still life of fruits in a beautiful bowl.</p></div></div></div>
+    <div class="flip-card wide only-mobile"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-sedona-horses-crop.png" alt="Horses on a Creek"></div><div class="flip-back"><span class="medium">Acrylic on Canvas</span><h4>Horses on a Creek</h4><div class="rule"></div><p>Oak Creek Canyon — capturing the beautiful Sedona landscape.</p></div></div></div>
+    <div class="flip-card tall"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-quarantine-still-life-crop.png" alt="Pandemic"></div><div class="flip-back"><span class="medium">Oil on Canvas</span><h4>Pandemic</h4><div class="rule"></div><p>A still life capturing a tragic time in our lives.</p></div></div></div>
+    <div class="flip-card tall"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-cat-portrait-crop.png" alt="Murzik"></div><div class="flip-back"><span class="medium">Pencil on Paper</span><h4>Murzik</h4><div class="rule"></div><p>A portrait drawn in memory of my senior cat passing away.</p></div></div></div>
+    <div class="flip-card tall"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-city-crowd.png" alt="Man Against Red"></div><div class="flip-back"><span class="medium">Watercolor on Paper</span><h4>Man Against Red</h4><div class="rule"></div><p>A masculine figure against a bold, emotive red background.</p></div></div></div>
+    <div class="flip-card tall fill-mobile"><div class="flip-inner"><div class="flip-front"><img src="/assets/images/art/art-blue-portrait.png" alt="Cerulean"></div><div class="flip-back"><span class="medium">Watercolor on Paper</span><h4>Cerulean</h4><div class="rule"></div><p>Watercolor on paper, capturing the beauty of the woman.</p></div></div></div>
   </div>
 </section>
 
@@ -253,27 +422,58 @@
   <h2 class="tiktok-title" id="ttTitle">Watch the <em>Process</em></h2>
   <p class="tiktok-sub">See how each painting comes to life</p>
   <div class="tiktok-track" id="tiktokTrack">
-    <div class="tiktok-card"><video src="assets/video/tiktok-1.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="assets/video/tiktok-2.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="assets/video/tiktok-3.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="assets/video/tiktok-4.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="assets/video/tiktok-1.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="assets/video/tiktok-2.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="assets/video/tiktok-3.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
-    <div class="tiktok-card"><video src="assets/video/tiktok-4.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="/assets/video/tiktok-1.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="/assets/video/tiktok-2.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="/assets/video/tiktok-3.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="/assets/video/tiktok-4.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="/assets/video/tiktok-1.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="/assets/video/tiktok-2.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="/assets/video/tiktok-3.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
+    <div class="tiktok-card"><video src="/assets/video/tiktok-4.mp4" playsinline muted loop preload="auto" autoplay></video><div class="tiktok-overlay"><span>Watch on TikTok</span></div></div>
   </div>
   <a href="https://www.tiktok.com/@paintingartist2188" target="_blank" class="tiktok-follow">Follow on TikTok →</a>
 </section>
 </div>
 
+<!-- CUSTOM SHOES -->
+<section class="shoes-feature" id="shoesFeature">
+  <div class="shoes-eyebrow">Wearable Art</div>
+  <h2 class="shoes-title" id="shoesTitle">Custom <em>Hand-Painted Shoes</em></h2>
+  <p class="shoes-sub">Art doesn't have to stay on the wall. Yelena hand-paints one-of-a-kind sneakers and heels — bring her your idea and wear a piece of original art wherever you go.</p>
+  <div class="shoes-row">
+    <a class="shoe-feature-card" href="/shoes/">
+      <div class="sf-img"><img src="/assets/images/shoes/shoe-anime.png" alt="Anime hand-painted shoes" loading="lazy"></div>
+      <div class="sf-info"><h3>Anime Collection</h3><div class="sf-medium">Hand-Painted Jordans</div></div>
+    </a>
+    <a class="shoe-feature-card" href="/shoes/">
+      <div class="sf-img"><img src="/assets/images/shoes/shoe-butterfly.png" alt="Butterfly hand-painted shoes" loading="lazy"></div>
+      <div class="sf-info"><h3>Butterfly Dreams</h3><div class="sf-medium">Hand-Painted GUESS</div></div>
+    </a>
+    <a class="shoe-feature-card" href="/shoes/">
+      <div class="sf-img"><img src="/assets/images/shoes/shoe-sunflower.png" alt="Sunflower hand-painted shoes" loading="lazy"></div>
+      <div class="sf-info"><h3>Sunflower Walk</h3><div class="sf-medium">Hand-Painted Platforms</div></div>
+    </a>
+    <a class="shoe-feature-card" href="/shoes/">
+      <div class="sf-img"><img src="/assets/images/shoes/shoe-starwars.png" alt="Star Wars hand-painted shoes" loading="lazy"></div>
+      <div class="sf-info"><h3>Galaxy Far Away</h3><div class="sf-medium">Hand-Painted Puma High-Tops</div></div>
+    </a>
+  </div>
+  <a href="/shoes/" class="shoes-btn">Explore Custom Shoes <span class="arr">→</span></a>
+</section>
+
 <!-- ABOUT -->
 <section class="about-band" id="aboutBand">
-  <div class="about-img-side"><img src="assets/images/artist/artist-headshot.png" alt="Yelena" id="aboutImg"><div class="about-img-frame"></div></div>
+  <div class="about-img-side"><img src="/assets/images/artist/artist-headshot.png" alt="Yelena Khait" id="aboutImg"><div class="img-grad"></div><div class="img-cap">At a gallery showing</div></div>
   <div class="about-txt-side" id="aboutTxt">
     <div class="tag">About the Artist</div>
     <h2>Every painting starts with <em>inspiration</em></h2>
     <p>Yelena is from a small town in Michigan, and she spends her days creating art at home. From hyper-realistic paintings, classic still lifes, to custom-painted shoes, she loves trying out new styles and challenging herself to do more.</p>
     <p>In an age of screens and AI at your fingertips, every brush stroke in Yelena's work is real. Every art piece holds years of dedication and practice.</p>
+    <div class="about-stats">
+      <div class="stat"><b>20+</b><small>Original Works</small></div>
+      <div class="stat"><b>4</b><small>Mediums</small></div>
+      <div class="stat"><b>100%</b><small>Hand-Painted</small></div>
+    </div>
     <a href="#" class="read-link">Read Full Bio →</a>
   </div>
 </section>
@@ -286,19 +486,63 @@
 
 <!-- CTA -->
 <section class="cta-section" id="ctaSec">
-  <div class="cta-ring" id="ctaRing"></div>
-  <div class="cta-inner" id="ctaInner"><h2>Your walls deserve<br><em>something real</em></h2><p>Commission a custom original painting. Share your vision, and Yelena will craft it by hand — a one-of-a-kind piece, just for you.</p><a href="commission.html" class="cta-btn">Start a Commission</a></div>
+  <div class="cta-bg"><picture>
+    <source media="(max-width:768px)" srcset="/assets/images/art/art-beach-sunset-cta.png">
+    <img src="/assets/images/art/art-bear-cta.png" alt="Painting by Yelena Khait">
+  </picture></div>
+  <div class="cta-scrim"></div>
+  <div class="cta-frame"></div>
+  <div class="cta-inner" id="ctaInner"><div class="cta-eyebrow">Commissions Open</div><h2>Your walls deserve<br><em>something real</em></h2><p>Commission a custom original painting. Share your vision, and Yelena will craft it by hand — a one-of-a-kind piece, just for you.</p><a href="/commission/" class="cta-btn">Start a Commission <span class="arr">→</span></a><div class="cta-note">Hand-painted to order · Shipped worldwide</div></div>
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-logo">YELENA</div>
-  <div class="footer-socials">
-    <a href="https://www.tiktok.com/@paintingartist2188" target="_blank">TikTok</a>
-    <a href="https://www.instagram.com/yelenas__art" target="_blank">Instagram</a>
-    <a href="https://youtube.com/@yelenakhait6520" target="_blank">YouTube</a>
+<footer id="siteFooter">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">Yelena <em>Khait</em></div>
+        <p class="footer-tag">Original paintings, portraits, and custom work — handmade in Michigan, one piece at a time. Every piece begins with a blank canvas and a story worth telling.</p>
+        <div class="footer-contact-row">
+          <a href="mailto:khait3102@gmail.com">khait3102@gmail.com</a>
+          <span class="footer-dot"></span>
+          <span>Michigan, USA</span>
+        </div>
+        <div class="footer-social-label">Follow Along</div>
+        <div class="footer-socials">
+          <a href="https://www.tiktok.com/@paintingartist2188" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.82a4.28 4.28 0 0 1-1-2.79V2.5h-3.1v12.4a2.55 2.55 0 1 1-1.8-2.44V9.3a5.66 5.66 0 1 0 4.9 5.6V9.01a7.34 7.34 0 0 0 4.3 1.38V7.3a4.29 4.29 0 0 1-3.3-1.48Z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/yelenas__art" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.05.41 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.22-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.22-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.05-.41-2.22C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.22.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.36 2.22-.41C8.42 2.21 8.8 2.2 12 2.2Zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7a2.85 2.85 0 0 0-.68-1.06 2.85 2.85 0 0 0-1.06-.68c-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4Zm0 3.06A4.94 4.94 0 1 1 7.06 12 4.94 4.94 0 0 1 12 7.06Zm0 8.14A3.2 3.2 0 1 0 8.8 12 3.2 3.2 0 0 0 12 15.2Zm5.14-8.34a1.15 1.15 0 1 1-1.15-1.15 1.15 1.15 0 0 1 1.15 1.15Z"/></svg>
+          </a>
+          <a href="https://youtube.com/@yelenakhait6520" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.9a3 3 0 0 0-2.12-2.12C19.5 4.28 12 4.28 12 4.28s-7.5 0-9.38.5A3 3 0 0 0 .5 6.9 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.1 3 3 0 0 0 2.12 2.12c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3 3 0 0 0 2.12-2.12A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.1ZM9.6 15.6V8.4l6.2 3.6Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-feature">
+        <div class="footer-head">Commissions Open</div>
+        <h3 class="footer-cta-title">Your walls deserve<br><em>something made for you</em></h3>
+        <div class="footer-thumbs">
+          <a href="/commission/" aria-label="Start a commission"><img src="/assets/images/art/art-sedona-horses-crop.png" alt="Painting by Yelena Khait" loading="lazy"></a>
+          <a href="/commission/" aria-label="Start a commission"><img src="/assets/images/art/art-sunflowers-crop.png" alt="Painting by Yelena Khait" loading="lazy"></a>
+          <a href="/commission/" aria-label="Start a commission"><img src="/assets/images/art/art-cat-portrait-crop.png" alt="Painting by Yelena Khait" loading="lazy"></a>
+        </div>
+        <a href="/commission/" class="footer-cta">Start a Commission <span class="arr">→</span></a>
+        <div class="footer-cta-note">Hand-painted to order · Shipped worldwide</div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Yelena Khait. All rights reserved.</div>
+      <div class="footer-made">Built by <em>Williams System L.L.C.</em></div>
+      <a href="#" class="footer-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+        Back to top
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </a>
+    </div>
   </div>
-  <div class="footer-copy">© 2026 Yelena Khait</div>
 </footer>
 
 <script>
@@ -332,13 +576,13 @@ function closeMenu(){
   document.body.style.overflow="";
 }
 
-/* CURTAIN SPLIT — fluid reveal */
-const scrubVal=checkMobile()?2:0.6;
-const splitTl=gsap.timeline({scrollTrigger:{trigger:".hero-split-wrap",start:"top top",end:"bottom bottom",scrub:scrubVal,pin:"#heroPin",pinSpacing:false,invalidateOnRefresh:true}});
-splitTl.to("#curtainL",{xPercent:-105,ease:"power1.inOut",duration:1},0);
-splitTl.to("#curtainR",{xPercent:105,ease:"power1.inOut",duration:1},0);
-splitTl.to("#curtainText",{scale:2,opacity:0,ease:"power1.in",duration:.6},0);
-splitTl.to(".hero-revealed",{opacity:1,ease:"power1.out",duration:.3},.5);
+/* NAV scroll state */
+const siteNav=document.getElementById("siteNav");
+const heroEl=document.querySelector(".hero");
+const navIO=new IntersectionObserver(([e])=>{
+  siteNav.classList.toggle("scrolled",!e.isIntersecting);
+},{rootMargin:"-72px 0px 0px 0px",threshold:0});
+if(heroEl)navIO.observe(heroEl);
 
 /* GALLERY */
 gsap.from("#galTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#galTitle",start:"top 95%",end:"top 60%",scrub:1,invalidateOnRefresh:true}});
@@ -369,7 +613,10 @@ document.querySelectorAll(".flip-card").forEach(card=>{
 gsap.from("#ttTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#tiktokSection",start:"top 90%",end:"top 55%",scrub:1,invalidateOnRefresh:true}});
 
 const track=document.getElementById("tiktokTrack");
-const trackW=track.scrollWidth/2;
+// exact width of one image set (start of the duplicated set) → seamless infinite loop,
+// independent of the flex gap (which differs between desktop and mobile).
+const ttCards=track.children;
+const trackW=ttCards[ttCards.length/2].getBoundingClientRect().left-ttCards[0].getBoundingClientRect().left;
 gsap.to(track,{x:-trackW,ease:"none",duration:checkMobile()?25:40,repeat:-1});
 
 document.querySelectorAll(".tiktok-card").forEach(card=>{
@@ -381,6 +628,12 @@ document.querySelectorAll(".tiktok-card").forEach(card=>{
   card.addEventListener("click",()=>{if(checkMobile())vid.muted=!vid.muted});
 });
 
+/* CUSTOM SHOES */
+gsap.from("#shoesTitle",{y:60,opacity:0,scrollTrigger:{trigger:"#shoesFeature",start:"top 88%",end:"top 55%",scrub:1,invalidateOnRefresh:true}});
+gsap.utils.toArray("#shoesFeature .shoe-feature-card").forEach(card=>{
+  gsap.from(card,{y:60,opacity:0,scrollTrigger:{trigger:card,start:"top 94%",end:"top 62%",scrub:1,invalidateOnRefresh:true}});
+});
+
 /* ABOUT */
 gsap.from("#aboutImg",{x:-80,opacity:0,scrollTrigger:{trigger:"#aboutBand",start:"top 90%",end:"top 25%",scrub:1,invalidateOnRefresh:true}});
 gsap.from("#aboutTxt",{x:80,opacity:0,scrollTrigger:{trigger:"#aboutBand",start:"top 85%",end:"top 20%",scrub:1,invalidateOnRefresh:true}});
@@ -390,8 +643,12 @@ const mqW=document.getElementById("mqTrack").scrollWidth/2;
 gsap.to("#mqTrack",{x:-mqW,ease:"none",duration:30,repeat:-1});
 
 /* CTA */
-gsap.from("#ctaInner",{scale:.5,opacity:0,scrollTrigger:{trigger:"#ctaSec",start:"top 90%",end:"top 25%",scrub:1,invalidateOnRefresh:true}});
-gsap.to("#ctaRing",{scale:1.3,rotation:30,scrollTrigger:{trigger:"#ctaSec",start:"top bottom",end:"bottom top",scrub:true,invalidateOnRefresh:true}});
+gsap.from("#ctaInner",{y:40,opacity:0,scrollTrigger:{trigger:"#ctaSec",start:"top 80%",end:"top 40%",scrub:1,invalidateOnRefresh:true}});
+gsap.to("#ctaSec .cta-bg img",{yPercent:12,ease:"none",scrollTrigger:{trigger:"#ctaSec",start:"top bottom",end:"bottom top",scrub:true,invalidateOnRefresh:true}});
+
+/* Footer — staggered reveal of brand + columns */
+gsap.from("#siteFooter .footer-top > *",{y:48,opacity:0,duration:.9,stagger:.12,ease:"power3.out",scrollTrigger:{trigger:"#siteFooter",start:"top 85%",invalidateOnRefresh:true}});
+gsap.from("#siteFooter .footer-bottom",{y:24,opacity:0,duration:.8,ease:"power2.out",scrollTrigger:{trigger:"#siteFooter .footer-bottom",start:"top 95%",invalidateOnRefresh:true}});
 </script>
 </body>
 </html>

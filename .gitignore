@@ -1,0 +1,21 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Python (if you run cropping scripts locally)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node (if Claude Code or tooling adds it)
+node_modules/
+
+# Scratch
+*.log
+tmp/
+
+# Local tooling & editor config — not part of the website
+.audit/
+.claude/
